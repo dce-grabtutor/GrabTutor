@@ -29,6 +29,7 @@ public class URI {
     public static final String APTITUDE_STATUS_CHECK = HOST + "aptitude_status_check.php";
 
     public static final String USER_LOCATION_UPDATE = HOST + "user_location_update.php";
+    public static final String USER_SEARCH_DISTANCE_UPDATE = HOST + "user_search_distance_update.php";
 
     public static final String TUTOR_SEARCH = HOST + "tutor_search.php";
 }
