@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_margin="16dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.dce.grabtutor.UserSelectActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/lvUserTypeSelect">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Select User Type"
+            android:textAlignment="center"
+            android:textSize="36sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lvUserTypes"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/lvUserTypeSelect">
+
+        <LinearLayout
+            android:id="@+id/lvUserTypeStudent"
+            android:background="@drawable/custom_border"
+            android:clickable="true"
+            android:onClick="btnStudentTypeClick"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_margin="4dp"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Student"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textSize="36sp" />
+
+            <ImageButton
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:background="@android:color/transparent"
+                android:cropToPadding="false"
+                android:onClick="btnStudentTypeClick"
+                android:scaleType="fitXY"
+                app:srcCompat="@drawable/student" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lvUserTypeTeacher"
+            android:background="@drawable/custom_border"
+            android:clickable="true"
+            android:onClick="btnTutorTypeClick"
+            android:layout_margin="4dp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tutor"
+                android:textAlignment="center"
+                android:textSize="36sp" />
+
+            <ImageButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="btnTutorTypeClick"
+                android:background="@android:color/transparent"
+                android:scaleType="fitXY"
+                app:srcCompat="@drawable/tutor" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

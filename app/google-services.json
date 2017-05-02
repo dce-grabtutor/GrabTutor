@@ -1,0 +1,75 @@
+{
+  "project_info": {
+    "project_number": "319018495483",
+    "firebase_url": "https://grabtutor-157809.firebaseio.com",
+    "project_id": "grabtutor-157809",
+    "storage_bucket": "grabtutor-157809.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:319018495483:android:ae1c24db269b8f55",
+        "android_client_info": {
+          "package_name": "com.dce.grabtutor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "319018495483-u1c856da31i6ng7lfq5h6t870k4hvn7r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dce.grabtutor",
+            "certificate_hash": "9c0f45a9ce02b11af2281155f6a90e144434c07e"
+          }
+        },
+        {
+          "client_id": "319018495483-v27i64vkvnt96kgcirni1l31q1h382j6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dce.grabtutor",
+            "certificate_hash": "7198aa36024f9ebf003e25bd810aaddc062cdc4b"
+          }
+        },
+        {
+          "client_id": "319018495483-qqps5gkh79ld3q15a3bt16ehp1ku7cp1.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "319018495483-l5ptvim0qr7rapf59q5msbrics8j8dtt.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "319018495483-703ef0i9rmln45oafo91gmmqnhiti7jv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dce.grabtutor",
+            "certificate_hash": "40ef8d4f0ab08960d48ad22e336718bf24f4aa5d"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdtivdsi-AZWFd7wPToytr14vHjC2dGAE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "319018495483-qqps5gkh79ld3q15a3bt16ehp1ku7cp1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

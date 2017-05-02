@@ -1,0 +1,70 @@
+<resources>
+    <string name="app_name">Grab Tutor</string>
+    <string name="title_activity_student_menu">StudentMenuActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_tutor_menu">TutorMenuActivity</string>
+
+    <array name="genders">
+        <item>Male</item>
+        <item>Female</item>
+    </array>
+
+    <array name="days">
+        <item>Monday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+        <item>Thursday</item>
+        <item>Friday</item>
+        <item>Saturday</item>
+        <item>Sunday</item>
+    </array>
+
+    <array name="hours">
+        <item>"01"</item>
+        <item>"02"</item>
+        <item>"03"</item>
+        <item>"04"</item>
+        <item>"05"</item>
+        <item>"06"</item>
+        <item>"07"</item>
+        <item>"08"</item>
+        <item>"09"</item>
+        <item>"10"</item>
+        <item>"11"</item>
+        <item>"12"</item>
+    </array>
+
+    <array name="minutes">
+        <item>"00"</item>
+        <item>"30"</item>
+    </array>
+
+    <array name="meridiem">
+        <item>AM</item>
+        <item>PM</item>
+    </array>
+
+    <array name="subjects">
+        <item>Math</item>
+        <item>English</item>
+        <item>Science</item>
+    </array>
+
+    <string name="title_activity_messages">MessagesActivity</string>
+    <string name="title_activity_message">MessageActivity</string>
+    <string name="title_activity_tutor_schedule_management">TutorScheduleManagementActivity</string>
+    <string name="title_activity_schedule_day_view">ScheduleDayViewActivity</string>
+    <string name="title_activity_tutor_aptitude_test_pre_exam">TutorAptitudeTestPreExamActivity
+    </string>
+    <string name="title_activity_tutor_aptitude_test_exam">TutorAptitudeTestExamActivity</string>
+    <string name="title_activity_student_tutor_search">StudentTutorSearchActivity</string>
+    <string name="title_activity_tutor_student_search">Map</string>
+    <string name="title_activity_student_tutor_search_schedule">StudentTutorSearchScheduleActivity
+    </string>
+    <string name="title_activity_student_tutor_search_settings">StudentTutorSearchSettingsActivity
+    </string>
+</resources>
