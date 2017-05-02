@@ -91,7 +91,7 @@
             android:name=".StudentTutorSearchActivity"
             android:label="@string/title_activity_tutor_student_search" />
         <activity
-            android:name=".StudentTutorSearchScheduleActivity"
+            android:name=".StudentTutorSearchScheduleManagementActivity"
             android:label="@string/title_activity_student_tutor_search_schedule"
             android:theme="@style/AppTheme" />
         <activity
