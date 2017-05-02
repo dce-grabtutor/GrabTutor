@@ -1,5 +1,6 @@
 package com.dce.grabtutor;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -47,6 +48,11 @@ public class StudentTutorSearchSettingsActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         this.finish();
         return true;
+    }
+
+    public void btnSearchScheduleManagementClick(View view) {
+        Intent intent = new Intent(this, StudentTutorSearchScheduleManagementActivity.class);
+        startActivity(intent);
     }
 
     public void btnSaveSearchRange(View view) {
