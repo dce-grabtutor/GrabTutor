@@ -26,11 +26,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.dce.grabtutor.Handler.MessageHandler;
-import com.dce.grabtutor.Model.Account;
-import com.dce.grabtutor.Model.Conversation;
-import com.dce.grabtutor.Model.Message;
-import com.dce.grabtutor.Model.URI;
+import com.dce.grabtutor.Service.Model.Account;
+import com.dce.grabtutor.Service.Model.Conversation;
+import com.dce.grabtutor.Service.Model.Message;
+import com.dce.grabtutor.Service.Model.URI;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

@@ -6,12 +6,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 
-import com.dce.grabtutor.Handler.MessageHandler;
-import com.dce.grabtutor.LoginActivity;
 import com.dce.grabtutor.MessageActivity;
-import com.dce.grabtutor.Model.Message;
+import com.dce.grabtutor.Service.Model.Message;
 import com.dce.grabtutor.R;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;

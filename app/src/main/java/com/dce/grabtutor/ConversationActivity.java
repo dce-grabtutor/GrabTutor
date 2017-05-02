@@ -1,10 +1,8 @@
 package com.dce.grabtutor;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -22,10 +19,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.dce.grabtutor.Model.Account;
-import com.dce.grabtutor.Model.Conversation;
-import com.dce.grabtutor.Model.Message;
-import com.dce.grabtutor.Model.URI;
+import com.dce.grabtutor.Service.Model.Account;
+import com.dce.grabtutor.Service.Model.Conversation;
+import com.dce.grabtutor.Service.Model.URI;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

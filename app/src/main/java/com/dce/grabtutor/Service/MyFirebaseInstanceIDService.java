@@ -2,8 +2,6 @@ package com.dce.grabtutor.Service;
 
 import android.util.Log;
 
-import com.dce.grabtutor.Model.Account;
-import com.dce.grabtutor.Task.TokenUpdateTask;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
 

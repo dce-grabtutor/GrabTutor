@@ -1,4 +1,4 @@
-package com.dce.grabtutor.Model;
+package com.dce.grabtutor.Service.Model;
 
 /**
  * Created by Skye on 4/30/2017.

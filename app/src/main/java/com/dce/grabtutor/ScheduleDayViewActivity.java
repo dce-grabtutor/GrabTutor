@@ -3,8 +3,6 @@ package com.dce.grabtutor;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,9 +21,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.dce.grabtutor.Model.Account;
-import com.dce.grabtutor.Model.Schedule;
-import com.dce.grabtutor.Model.URI;
+import com.dce.grabtutor.Service.Model.Account;
+import com.dce.grabtutor.Service.Model.Schedule;
+import com.dce.grabtutor.Service.Model.URI;
 
 import org.json.JSONObject;
 

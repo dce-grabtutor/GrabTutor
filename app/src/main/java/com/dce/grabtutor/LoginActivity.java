@@ -16,10 +16,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.dce.grabtutor.Handler.AccountHandler;
-import com.dce.grabtutor.Model.Account;
-import com.dce.grabtutor.Model.URI;
+import com.dce.grabtutor.Service.Model.Account;
+import com.dce.grabtutor.Service.Model.URI;
 import com.dce.grabtutor.Task.TokenUpdateTask;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.json.JSONArray;
