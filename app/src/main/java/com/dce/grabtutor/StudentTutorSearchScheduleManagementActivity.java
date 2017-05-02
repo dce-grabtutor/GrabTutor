@@ -12,6 +12,19 @@ public class StudentTutorSearchScheduleManagementActivity extends AppCompatActiv
         setContentView(R.layout.activity_student_tutor_search_schedule_management);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        setTitle("Search Schedule Management");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        this.finish();
+        return true;
     }
 
 }
