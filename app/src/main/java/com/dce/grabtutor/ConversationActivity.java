@@ -19,9 +19,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.dce.grabtutor.Service.Model.Account;
-import com.dce.grabtutor.Service.Model.Conversation;
-import com.dce.grabtutor.Service.Model.URI;
+import com.dce.grabtutor.Model.Account;
+import com.dce.grabtutor.Model.Conversation;
+import com.dce.grabtutor.Model.URI;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -129,23 +129,6 @@ public class ConversationActivity extends AppCompatActivity {
             this.context = context;
         }
 
-        public class ViewHolder extends RecyclerView.ViewHolder {
-            CardView cv;
-
-            TextView tvRvConversationInitial;
-            TextView tvRvConversationFullName;
-            TextView tvRvConversationUsername;
-
-            public ViewHolder(View itemView) {
-                super(itemView);
-
-                tvRvConversationInitial = (TextView) itemView.findViewById(R.id.tvRvConversationInitial);
-                tvRvConversationFullName = (TextView) itemView.findViewById(R.id.tvRvConversationFullName);
-                tvRvConversationUsername = (TextView) itemView.findViewById(R.id.tvRvConversationUsername);
-                cv = (CardView) itemView.findViewById(R.id.cvRvConversation);
-            }
-        }
-
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
             View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recycler_conversation, viewGroup, false);
@@ -180,6 +163,23 @@ public class ConversationActivity extends AppCompatActivity {
         @Override
         public int getItemCount() {
             return Conversation.conversations.size();
+        }
+
+        public class ViewHolder extends RecyclerView.ViewHolder {
+            CardView cv;
+
+            TextView tvRvConversationInitial;
+            TextView tvRvConversationFullName;
+            TextView tvRvConversationUsername;
+
+            public ViewHolder(View itemView) {
+                super(itemView);
+
+                tvRvConversationInitial = (TextView) itemView.findViewById(R.id.tvRvConversationInitial);
+                tvRvConversationFullName = (TextView) itemView.findViewById(R.id.tvRvConversationFullName);
+                tvRvConversationUsername = (TextView) itemView.findViewById(R.id.tvRvConversationUsername);
+                cv = (CardView) itemView.findViewById(R.id.cvRvConversation);
+            }
         }
     }
 

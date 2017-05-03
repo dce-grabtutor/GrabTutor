@@ -9,7 +9,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 
-import com.dce.grabtutor.Service.Model.URI;
+import com.dce.grabtutor.Model.URI;
 
 public class TutorAptitudeTestExamActivity extends AppCompatActivity {
 

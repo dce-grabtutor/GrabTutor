@@ -1,4 +1,4 @@
-package com.dce.grabtutor.Service.Model;
+package com.dce.grabtutor.Model;
 
 /**
  * Created by Skye on 5/1/2017.
@@ -6,13 +6,11 @@ package com.dce.grabtutor.Service.Model;
 
 public class Aptitude {
 
-    public static Aptitude currentAptitude;
-
     public static final String APTITUDE_ID = "apt_id";
     public static final String APTITUDE_ACC_ID = "acc_id";
     public static final String APTITUDE_START = "apt_start";
     public static final String APTITUDE_END = "apt_end";
-
+    public static Aptitude currentAptitude;
     private int apt_id;
     private int acc_id;
     private String apt_start;

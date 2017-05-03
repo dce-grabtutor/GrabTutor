@@ -1,4 +1,4 @@
-package com.dce.grabtutor.Service.Model;
+package com.dce.grabtutor.Model;
 
 import java.util.ArrayList;
 
@@ -7,14 +7,6 @@ import java.util.ArrayList;
  */
 
 public class Schedule {
-
-    public static ArrayList<Schedule> schedules_monday;
-    public static ArrayList<Schedule> schedules_tuesday;
-    public static ArrayList<Schedule> schedules_wednesday;
-    public static ArrayList<Schedule> schedules_thursday;
-    public static ArrayList<Schedule> schedules_friday;
-    public static ArrayList<Schedule> schedules_saturday;
-    public static ArrayList<Schedule> schedules_sunday;
 
     public static final String SCHEDULE_ID = "sched_id";
     public static final String SCHEDULE_DAY = "sched_day";
@@ -25,7 +17,13 @@ public class Schedule {
     public static final String SCHEDULE_ACC_ID = "acc_id";
     public static final String SCHEDULE_BSCHED_ID = "bsched_id";
     public static final String SCHEDULE_STUD_ID = "stud_id";
-
+    public static ArrayList<Schedule> schedules_monday;
+    public static ArrayList<Schedule> schedules_tuesday;
+    public static ArrayList<Schedule> schedules_wednesday;
+    public static ArrayList<Schedule> schedules_thursday;
+    public static ArrayList<Schedule> schedules_friday;
+    public static ArrayList<Schedule> schedules_saturday;
+    public static ArrayList<Schedule> schedules_sunday;
     private int sched_id;
     private String sched_day;
     private int sched_hour;
@@ -36,6 +34,36 @@ public class Schedule {
 
     private Subject subject;
     private Account student;
+
+    public static int getReservedCount(ArrayList<Schedule> schedules) {
+        int count = 0;
+        try {
+            for (Schedule schedule : schedules) {
+                if (schedule.getSched_status().equals("Reserved")) {
+                    count++;
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return count;
+    }
+
+    public static int getAvailableCount(ArrayList<Schedule> schedules) {
+        int count = 0;
+        try {
+            for (Schedule schedule : schedules) {
+                if (schedule.getSched_status().equals("Available")) {
+                    count++;
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return count;
+    }
 
     public int getSched_id() {
         return sched_id;
@@ -107,36 +135,6 @@ public class Schedule {
 
     public void setStudent(Account student) {
         this.student = student;
-    }
-
-    public static int getReservedCount(ArrayList<Schedule> schedules) {
-        int count = 0;
-        try {
-            for (Schedule schedule : schedules) {
-                if (schedule.getSched_status().equals("Reserved")) {
-                    count++;
-                }
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-
-        return count;
-    }
-
-    public static int getAvailableCount(ArrayList<Schedule> schedules) {
-        int count = 0;
-        try {
-            for (Schedule schedule : schedules) {
-                if (schedule.getSched_status().equals("Available")) {
-                    count++;
-                }
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-
-        return count;
     }
 
 }

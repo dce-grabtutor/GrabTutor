@@ -2,8 +2,8 @@ package com.dce.grabtutor;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -16,8 +16,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.dce.grabtutor.Service.Model.Account;
-import com.dce.grabtutor.Service.Model.URI;
+import com.dce.grabtutor.Model.Account;
+import com.dce.grabtutor.Model.URI;
 
 import org.json.JSONObject;
 

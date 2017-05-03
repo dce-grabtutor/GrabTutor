@@ -26,10 +26,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.dce.grabtutor.Service.Model.Account;
-import com.dce.grabtutor.Service.Model.Conversation;
-import com.dce.grabtutor.Service.Model.Message;
-import com.dce.grabtutor.Service.Model.URI;
+import com.dce.grabtutor.Model.Account;
+import com.dce.grabtutor.Model.Conversation;
+import com.dce.grabtutor.Model.Message;
+import com.dce.grabtutor.Model.URI;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -49,6 +49,16 @@ public class MessageActivity extends AppCompatActivity {
     String lastMessage;
 
     int position;
+    private BroadcastReceiver messageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            try {
+                reloadMessages();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -235,24 +245,6 @@ public class MessageActivity extends AppCompatActivity {
             this.context = context;
         }
 
-        public class ViewHolder extends RecyclerView.ViewHolder {
-            CardView cv;
-
-            TextView tvRvMessageBody;
-            TextView tvRvMessageDateTime;
-
-            LinearLayout ll;
-
-            public ViewHolder(View itemView) {
-                super(itemView);
-
-                tvRvMessageBody = (TextView) itemView.findViewById(R.id.tvRvMessageBody);
-                tvRvMessageDateTime = (TextView) itemView.findViewById(R.id.tvRvMessageDateTime);
-                cv = (CardView) itemView.findViewById(R.id.cvRvMessage);
-                ll = (LinearLayout) itemView.findViewById(R.id.llRvMessage);
-            }
-        }
-
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
             View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recycler_message, viewGroup, false);
@@ -279,17 +271,24 @@ public class MessageActivity extends AppCompatActivity {
         public int getItemCount() {
             return Message.messages.size();
         }
-    }
 
-    private BroadcastReceiver messageReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            try {
-                reloadMessages();
-            } catch (Exception ex) {
-                ex.printStackTrace();
+        public class ViewHolder extends RecyclerView.ViewHolder {
+            CardView cv;
+
+            TextView tvRvMessageBody;
+            TextView tvRvMessageDateTime;
+
+            LinearLayout ll;
+
+            public ViewHolder(View itemView) {
+                super(itemView);
+
+                tvRvMessageBody = (TextView) itemView.findViewById(R.id.tvRvMessageBody);
+                tvRvMessageDateTime = (TextView) itemView.findViewById(R.id.tvRvMessageDateTime);
+                cv = (CardView) itemView.findViewById(R.id.cvRvMessage);
+                ll = (LinearLayout) itemView.findViewById(R.id.llRvMessage);
             }
         }
-    };
+    }
 
 }

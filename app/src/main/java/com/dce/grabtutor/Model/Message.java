@@ -1,4 +1,4 @@
-package com.dce.grabtutor.Service.Model;
+package com.dce.grabtutor.Model;
 
 import java.util.ArrayList;
 
@@ -7,14 +7,12 @@ import java.util.ArrayList;
  */
 
 public class Message {
-    public static ArrayList<Message> messages;
-
     public static final String MESSAGE_ID = "msg_id";
     public static final String MESSAGE_BODY = "msg_body";
     public static final String MESSAGE_DATETIME = "msg_datetime";
     public static final String MESSAGE_ACC_ID = "acc_id";
     public static final String MESSAGE_CONV_ID = "conv_id";
-
+    public static ArrayList<Message> messages;
     private int msg_id;
     private String msg_body;
     private String msg_datetime;

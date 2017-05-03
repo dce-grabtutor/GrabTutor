@@ -1,4 +1,4 @@
-package com.dce.grabtutor.Service.Model;
+package com.dce.grabtutor.Model;
 
 import java.util.ArrayList;
 
@@ -7,12 +7,10 @@ import java.util.ArrayList;
  */
 
 public class Conversation {
-    public static ArrayList<Conversation> conversations;
-
     public static final String CONVERSATION_ID = "conv_id";
     public static final String CONVERSATION_ACC_ID_STUDENT = "student_id";
     public static final String CONVERSATION_ACC_ID_TUTOR = "tutor_id";
-
+    public static ArrayList<Conversation> conversations;
     private int conv_id;
     private Account conv_account;
 

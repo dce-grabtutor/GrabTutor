@@ -16,9 +16,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.dce.grabtutor.Service.Model.Account;
-import com.dce.grabtutor.Service.Model.Schedule;
-import com.dce.grabtutor.Service.Model.URI;
+import com.dce.grabtutor.Model.Account;
+import com.dce.grabtutor.Model.Schedule;
+import com.dce.grabtutor.Model.URI;
 
 import org.json.JSONObject;
 

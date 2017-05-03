@@ -5,8 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.dce.grabtutor.Service.Model.Account;
-import com.dce.grabtutor.Service.Model.DatabaseHandler;
+import com.dce.grabtutor.Model.Account;
+import com.dce.grabtutor.Model.DatabaseHandler;
 
 /**
  * Created by Skye on 4/27/2017.

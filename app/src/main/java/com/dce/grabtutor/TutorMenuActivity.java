@@ -2,7 +2,6 @@ package com.dce.grabtutor;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -10,6 +9,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,11 +19,12 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.dce.grabtutor.Service.Model.Account;
-import com.dce.grabtutor.Service.Model.Aptitude;
-import com.dce.grabtutor.Service.Model.Schedule;
-import com.dce.grabtutor.Service.Model.Subject;
-import com.dce.grabtutor.Service.Model.URI;
+import com.dce.grabtutor.Model.Account;
+import com.dce.grabtutor.Model.Aptitude;
+import com.dce.grabtutor.Model.Schedule;
+import com.dce.grabtutor.Model.Subject;
+import com.dce.grabtutor.Model.TrackGPS;
+import com.dce.grabtutor.Model.URI;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -37,6 +38,9 @@ public class TutorMenuActivity extends AppCompatActivity
 
     TextView tvNavUserFullName;
     TextView tvNavUserEmail;
+    double longitude;
+    double latitude;
+    private TrackGPS gps;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +69,17 @@ public class TutorMenuActivity extends AppCompatActivity
 
         tvNavUserFullName.setText(fullName);
         tvNavUserEmail.setText(email);
+
+        gps = new TrackGPS(TutorMenuActivity.this);
+        if (gps.canGetLocation()) {
+            longitude = gps.getLongitude();
+            latitude = gps.getLatitude();
+            updateLocationInServer(longitude, latitude);
+//            Toast.makeText(getApplicationContext(), "Longitude:" + Double.toString(longitude) + "\nLatitude:" + Double.toString(latitude), Toast.LENGTH_SHORT).show();
+        } else {
+            gps.showSettingsAlert();
+        }
+
     }
 
     @Override
@@ -505,6 +520,47 @@ public class TutorMenuActivity extends AppCompatActivity
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put(Schedule.SCHEDULE_ACC_ID, String.valueOf(Account.loggedAccount.getAcc_id()));
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
+    public void updateLocationInServer(final double longitude, final double latitude) {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URI.USER_LOCATION_UPDATE,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        System.out.println(response);
+
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+
+                            if (jsonObject.getBoolean("success")) {
+                                Toast.makeText(TutorMenuActivity.this, "Location Update Sent to Server", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                            Toast.makeText(TutorMenuActivity.this, "Connection Failed", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                },
+
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put(Account.ACCOUNT_ID, String.valueOf(Account.loggedAccount.getAcc_id()));
+                params.put(Account.ACCOUNT_LONGITUDE, String.valueOf(longitude));
+                params.put(Account.ACCOUNT_LATITUDE, String.valueOf(latitude));
                 return params;
             }
         };

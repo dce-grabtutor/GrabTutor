@@ -58,6 +58,7 @@ public class StudentTutorSearchActivity extends AppCompatActivity implements OnM
     Spinner spSearchMeridiemFrom;
     Spinner spSearchMeridiemTo;
     Spinner spSearchSubject;
+
     private GoogleApiClient mGoogleApiClient;
     private LocationRequest mLocationRequest;
     private GoogleMap mMap;

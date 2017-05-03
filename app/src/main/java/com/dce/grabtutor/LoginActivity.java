@@ -2,9 +2,9 @@ package com.dce.grabtutor;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -16,8 +16,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.dce.grabtutor.Handler.AccountHandler;
-import com.dce.grabtutor.Service.Model.Account;
-import com.dce.grabtutor.Service.Model.URI;
+import com.dce.grabtutor.Model.Account;
+import com.dce.grabtutor.Model.URI;
 import com.dce.grabtutor.Task.TokenUpdateTask;
 import com.google.firebase.iid.FirebaseInstanceId;
 
@@ -33,11 +33,9 @@ public class LoginActivity extends AppCompatActivity {
     public static final String USER_TYPE_TUTOR = "Tutor";
 
     public static boolean loggedOut = false;
-
-    private String userType;
-
     EditText etLoginUsername;
     EditText etLoginPassword;
+    private String userType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

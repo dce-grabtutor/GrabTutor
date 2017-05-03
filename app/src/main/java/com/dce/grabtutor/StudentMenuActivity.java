@@ -13,7 +13,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.dce.grabtutor.Handler.AccountHandler;
-import com.dce.grabtutor.Service.Model.Account;
+import com.dce.grabtutor.Model.Account;
 
 public class StudentMenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {

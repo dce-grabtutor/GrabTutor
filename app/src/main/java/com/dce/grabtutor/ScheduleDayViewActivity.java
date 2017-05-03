@@ -21,9 +21,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.dce.grabtutor.Service.Model.Account;
-import com.dce.grabtutor.Service.Model.Schedule;
-import com.dce.grabtutor.Service.Model.URI;
+import com.dce.grabtutor.Model.Account;
+import com.dce.grabtutor.Model.Schedule;
+import com.dce.grabtutor.Model.URI;
 
 import org.json.JSONObject;
 
@@ -160,24 +160,6 @@ public class ScheduleDayViewActivity extends AppCompatActivity {
             this.day = day;
         }
 
-        public class ViewHolder extends RecyclerView.ViewHolder {
-            CardView cv;
-            Button btnRemove;
-
-            TextView tvScheduleStatus;
-            TextView tvScheduleTime;
-
-            public ViewHolder(View itemView) {
-                super(itemView);
-
-                tvScheduleStatus = (TextView) itemView.findViewById(R.id.tvScheduleStatus);
-                tvScheduleTime = (TextView) itemView.findViewById(R.id.tvScheduleTime);
-
-                btnRemove = (Button) itemView.findViewById(R.id.btnRemoveSchedule);
-                cv = (CardView) itemView.findViewById(R.id.cvScheduleDay);
-            }
-        }
-
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
             View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recycler_schedule_day_available, viewGroup, false);
@@ -274,6 +256,24 @@ public class ScheduleDayViewActivity extends AppCompatActivity {
         public int getItemCount() {
             return this.schedules.size();
         }
+
+        public class ViewHolder extends RecyclerView.ViewHolder {
+            CardView cv;
+            Button btnRemove;
+
+            TextView tvScheduleStatus;
+            TextView tvScheduleTime;
+
+            public ViewHolder(View itemView) {
+                super(itemView);
+
+                tvScheduleStatus = (TextView) itemView.findViewById(R.id.tvScheduleStatus);
+                tvScheduleTime = (TextView) itemView.findViewById(R.id.tvScheduleTime);
+
+                btnRemove = (Button) itemView.findViewById(R.id.btnRemoveSchedule);
+                cv = (CardView) itemView.findViewById(R.id.cvScheduleDay);
+            }
+        }
     }
 
     public class ScheduleReservedAdapter extends RecyclerView.Adapter<ScheduleReservedAdapter.ViewHolder> {
@@ -286,33 +286,6 @@ public class ScheduleDayViewActivity extends AppCompatActivity {
             this.context = context;
             this.schedules = schedules;
             this.day = day;
-        }
-
-        public class ViewHolder extends RecyclerView.ViewHolder {
-            CardView cvScheduleDay;
-
-            Button btnRemove;
-
-            TextView tvScheduleStatus;
-            TextView tvScheduleTime;
-            TextView tvScheduleSubject;
-
-            TextView tvScheduleFullName;
-            TextView tvScheduleUsername;
-
-            public ViewHolder(View itemView) {
-                super(itemView);
-
-                tvScheduleStatus = (TextView) itemView.findViewById(R.id.tvScheduleStatus);
-                tvScheduleTime = (TextView) itemView.findViewById(R.id.tvScheduleTime);
-                tvScheduleSubject = (TextView) itemView.findViewById(R.id.tvScheduleSubject);
-                tvScheduleFullName = (TextView) itemView.findViewById(R.id.tvScheduleUserFullName);
-                tvScheduleUsername = (TextView) itemView.findViewById(R.id.tvScheduleUsername);
-
-                cvScheduleDay = (CardView) itemView.findViewById(R.id.cvScheduleDay);
-
-                btnRemove = (Button) itemView.findViewById(R.id.btnRemoveSchedule);
-            }
         }
 
         @Override
@@ -423,6 +396,33 @@ public class ScheduleDayViewActivity extends AppCompatActivity {
         @Override
         public int getItemCount() {
             return this.schedules.size();
+        }
+
+        public class ViewHolder extends RecyclerView.ViewHolder {
+            CardView cvScheduleDay;
+
+            Button btnRemove;
+
+            TextView tvScheduleStatus;
+            TextView tvScheduleTime;
+            TextView tvScheduleSubject;
+
+            TextView tvScheduleFullName;
+            TextView tvScheduleUsername;
+
+            public ViewHolder(View itemView) {
+                super(itemView);
+
+                tvScheduleStatus = (TextView) itemView.findViewById(R.id.tvScheduleStatus);
+                tvScheduleTime = (TextView) itemView.findViewById(R.id.tvScheduleTime);
+                tvScheduleSubject = (TextView) itemView.findViewById(R.id.tvScheduleSubject);
+                tvScheduleFullName = (TextView) itemView.findViewById(R.id.tvScheduleUserFullName);
+                tvScheduleUsername = (TextView) itemView.findViewById(R.id.tvScheduleUsername);
+
+                cvScheduleDay = (CardView) itemView.findViewById(R.id.cvScheduleDay);
+
+                btnRemove = (Button) itemView.findViewById(R.id.btnRemoveSchedule);
+            }
         }
     }
 

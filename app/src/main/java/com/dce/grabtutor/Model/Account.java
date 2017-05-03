@@ -1,4 +1,4 @@
-package com.dce.grabtutor.Service.Model;
+package com.dce.grabtutor.Model;
 
 /**
  * Created by Skye on 4/25/2017.
@@ -6,24 +6,19 @@ package com.dce.grabtutor.Service.Model;
 
 public class Account {
 
-    public static Account loggedAccount;
-
     public static final String ACCOUNT_ID = "acc_id";
     public static final String ACCOUNT_USERNAME = "acc_user";
     public static final String ACCOUNT_PASSWORD = "acc_pass";
-
     public static final String ACCOUNT_FIRST_NAME = "acc_fname";
     public static final String ACCOUNT_MIDDLE_NAME = "acc_mname";
     public static final String ACCOUNT_LAST_NAME = "acc_lname";
-
     public static final String ACCOUNT_EMAIL = "acc_email";
     public static final String ACCOUNT_GENDER = "acc_gender";
     public static final String ACCOUNT_TYPE = "acc_type";
     public static final String ACCOUNT_TOKEN = "acc_token";
-
     public static final String ACCOUNT_LONGITUDE = "acc_longitude";
     public static final String ACCOUNT_LATITUDE = "acc_latitude";
-
+    public static Account loggedAccount;
     private int acc_id;
     private String acc_user;
     private String acc_pass;
