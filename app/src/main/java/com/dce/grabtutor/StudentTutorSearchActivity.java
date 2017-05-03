@@ -1,20 +1,8 @@
 package com.dce.grabtutor;
 
-import android.*;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.location.Location;
-
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.dce.grabtutor.Model.Account;
-import com.dce.grabtutor.Model.URI;
-import com.google.android.gms.location.LocationListener;
-
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -23,21 +11,32 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.dce.grabtutor.Model.Account;
+import com.dce.grabtutor.Model.Subject;
+import com.dce.grabtutor.Model.URI;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONObject;
 
@@ -49,12 +48,18 @@ public class StudentTutorSearchActivity extends AppCompatActivity implements OnM
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
 
-    private GoogleApiClient mGoogleApiClient;
-    private LocationRequest mLocationRequest;
-
+    public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     Location mLastLocation;
     Marker mCurrLocationMarker;
-
+    EditText etSearchRangeDistance;
+    Spinner spSearchDay;
+    Spinner spSearchHourFrom;
+    Spinner spSearchHourTo;
+    Spinner spSearchMeridiemFrom;
+    Spinner spSearchMeridiemTo;
+    Spinner spSearchSubject;
+    private GoogleApiClient mGoogleApiClient;
+    private LocationRequest mLocationRequest;
     private GoogleMap mMap;
 
     @Override
@@ -65,6 +70,14 @@ public class StudentTutorSearchActivity extends AppCompatActivity implements OnM
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle("Tutor Search");
+
+        etSearchRangeDistance = (EditText) findViewById(R.id.etSearchRangeDistance);
+        spSearchDay = (Spinner) findViewById(R.id.spSearchDay);
+        spSearchHourFrom = (Spinner) findViewById(R.id.spSearchHourFrom);
+        spSearchHourTo = (Spinner) findViewById(R.id.spSearchHourTo);
+        spSearchMeridiemFrom = (Spinner) findViewById(R.id.spSearchMeridiemFrom);
+        spSearchMeridiemTo = (Spinner) findViewById(R.id.spSearchMeridiemTo);
+        spSearchSubject = (Spinner) findViewById(R.id.spSearchSubject);
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
@@ -108,8 +121,7 @@ public class StudentTutorSearchActivity extends AppCompatActivity implements OnM
                 buildGoogleApiClient();
                 mMap.setMyLocationEnabled(true);
             }
-        }
-        else {
+        } else {
             buildGoogleApiClient();
             mMap.setMyLocationEnabled(true);
         }
@@ -183,8 +195,6 @@ public class StudentTutorSearchActivity extends AppCompatActivity implements OnM
                 .build();
         mGoogleApiClient.connect();
     }
-
-    public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
 
     public boolean checkLocationPermission() {
         if (ContextCompat.checkSelfPermission(this,
@@ -288,6 +298,69 @@ public class StudentTutorSearchActivity extends AppCompatActivity implements OnM
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
+    }
+
+    public void btnSearchClick(View view) {
+        try {
+            int searchDistance = Integer.parseInt(etSearchRangeDistance.getText().toString());
+            final int searchStart = Integer.parseInt(spSearchHourFrom.getSelectedItem().toString());
+            final int searchEnd = Integer.parseInt(spSearchHourTo.getSelectedItem().toString());
+
+            final String searchMeridiemStart = spSearchMeridiemFrom.getSelectedItem().toString();
+            final String searchMeridiemEnd = spSearchMeridiemTo.getSelectedItem().toString();
+
+            final String searchDay = spSearchDay.getSelectedItem().toString();
+            final String searchSubject = spSearchSubject.getSelectedItem().toString();
+
+            if (searchDistance > 0 && searchDistance < 21) {
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, URI.TUTOR_SEARCH,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                System.out.println(response);
+
+                                try {
+                                    JSONObject jsonObject = new JSONObject(response);
+                                    if (jsonObject.getBoolean("success")) {
+
+                                    }
+                                } catch (Exception ex) {
+                                    ex.printStackTrace();
+                                }
+                            }
+                        },
+
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                error.printStackTrace();
+                                Toast.makeText(StudentTutorSearchActivity.this, "Connection Failed", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                ) {
+                    @Override
+                    protected Map<String, String> getParams() {
+                        Map<String, String> params = new HashMap<String, String>();
+                        params.put(Account.ACCOUNT_ID, String.valueOf(Account.loggedAccount.getAcc_id()));
+                        params.put("search_day", searchDay);
+                        params.put("search_hour_start", String.valueOf(searchStart));
+                        params.put("search_hour_end", String.valueOf(searchEnd));
+                        params.put("search_meridiem_start", searchMeridiemStart);
+                        params.put("search_meridiem_end", searchMeridiemEnd);
+                        params.put(Subject.SUBJECT_NAME, searchSubject);
+                        return params;
+                    }
+                };
+
+                RequestQueue requestQueue = Volley.newRequestQueue(this);
+                requestQueue.add(stringRequest);
+            } else {
+                Toast.makeText(this, "Please provide a search range between 1 to 20Km", Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            Toast.makeText(this, "Please provide a valid input", Toast.LENGTH_SHORT).show();
+        }
     }
 
 }
