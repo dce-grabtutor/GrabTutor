@@ -23,7 +23,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".LoginActivity" />
-        <activity android:name=".SignupActivity" />
         <activity
             android:name=".StudentMenuActivity"
             android:label="@string/title_activity_student_menu"
@@ -97,6 +96,14 @@
         <activity
             android:name=".StudentTutorSearchSettingsActivity"
             android:label="@string/title_activity_student_tutor_search_settings"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".StudentTutorSearchListActivity"
+            android:label="@string/title_activity_student_tutor_search_list"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".SignupActivity"
+            android:label="@string/title_activity_signup"
             android:theme="@style/AppTheme"></activity>
     </application>
 

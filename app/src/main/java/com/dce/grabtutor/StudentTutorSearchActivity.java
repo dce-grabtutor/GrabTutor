@@ -1,6 +1,7 @@
 package com.dce.grabtutor;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Build;
@@ -23,6 +24,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.dce.grabtutor.Model.Account;
+import com.dce.grabtutor.Model.Schedule;
+import com.dce.grabtutor.Model.SearchedTutor;
 import com.dce.grabtutor.Model.Subject;
 import com.dce.grabtutor.Model.URI;
 import com.google.android.gms.common.ConnectionResult;
@@ -38,8 +41,10 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -324,6 +329,51 @@ public class StudentTutorSearchActivity extends AppCompatActivity implements OnM
                                     JSONObject jsonObject = new JSONObject(response);
                                     if (jsonObject.getBoolean("success")) {
 
+                                        SearchedTutor.searchedTutors = new ArrayList<>();
+
+                                        int count = 0;
+                                        JSONArray arrayAccount = jsonObject.getJSONArray("accounts");
+                                        for (int i = 0; i < arrayAccount.length(); i++) {
+                                            JSONObject accountObject = arrayAccount.getJSONObject(i);
+
+                                            Account account = new Account();
+                                            account.setAcc_id(accountObject.getInt(Account.ACCOUNT_ID));
+                                            account.setAcc_user(accountObject.getString(Account.ACCOUNT_USERNAME));
+                                            account.setAcc_fname(accountObject.getString(Account.ACCOUNT_FIRST_NAME));
+                                            account.setAcc_mname(accountObject.getString(Account.ACCOUNT_MIDDLE_NAME));
+                                            account.setAcc_lname(accountObject.getString(Account.ACCOUNT_LAST_NAME));
+                                            account.setAcc_email(accountObject.getString(Account.ACCOUNT_EMAIL));
+                                            account.setAcc_gender(accountObject.getString(Account.ACCOUNT_GENDER));
+                                            account.setAcc_type(accountObject.getString(Account.ACCOUNT_TYPE));
+                                            account.setAcc_token(accountObject.getString(Account.ACCOUNT_TOKEN));
+                                            account.setAcc_longitude(accountObject.getDouble(Account.ACCOUNT_LONGITUDE));
+                                            account.setAcc_latitude(accountObject.getDouble(account.ACCOUNT_LATITUDE));
+
+                                            JSONObject scheduleObject = accountObject.getJSONObject("schedule");
+
+                                            Schedule schedule = new Schedule();
+                                            schedule.setSched_id(scheduleObject.getInt(Schedule.SCHEDULE_ID));
+                                            schedule.setSched_day(scheduleObject.getString(Schedule.SCHEDULE_DAY));
+                                            schedule.setSched_hour(scheduleObject.getInt(Schedule.SCHEDULE_HOUR));
+                                            schedule.setSched_minute(scheduleObject.getInt(Schedule.SCHEDULE_MINUTE));
+                                            schedule.setSched_meridiem(scheduleObject.getString(Schedule.SCHEUDLE_MERIDIEM));
+//                                            schedule.setSched_status(scheduleObject.getString(Schedule.SCHEDULE_STATUS));
+                                            schedule.setAcc_id(scheduleObject.getInt(Schedule.SCHEDULE_ACC_ID));
+
+                                            SearchedTutor searchedTutor = new SearchedTutor();
+                                            searchedTutor.setAccount(account);
+                                            searchedTutor.setSchedule(schedule);
+
+                                            SearchedTutor.searchedTutors.add(searchedTutor);
+                                            count++;
+                                        }
+
+                                        if (count > 0) {
+                                            Intent intent = new Intent(StudentTutorSearchActivity.this, StudentTutorSearchListActivity.class);
+                                            startActivity(intent);
+                                        } else {
+                                            Toast.makeText(StudentTutorSearchActivity.this, "No Tutors Found, Please Try Again", Toast.LENGTH_SHORT).show();
+                                        }
                                     }
                                 } catch (Exception ex) {
                                     ex.printStackTrace();

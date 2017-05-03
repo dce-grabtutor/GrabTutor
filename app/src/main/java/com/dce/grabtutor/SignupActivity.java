@@ -4,10 +4,10 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -26,8 +26,6 @@ import java.util.Map;
 
 public class SignupActivity extends AppCompatActivity {
 
-    TextView tvSignupUserType;
-
     EditText etSignupUsername;
     EditText etSignupPassword;
     EditText etSignupVerifyPassword;
@@ -43,12 +41,13 @@ public class SignupActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
         userType = intent.getStringExtra("UserType");
-
-        tvSignupUserType = (TextView) findViewById(R.id.tvSignupUserType);
-        tvSignupUserType.setText(userType);
+        setTitle("Signup as (" + userType + ")");
 
         etSignupUsername = (EditText) findViewById(R.id.etSignupUsername);
         etSignupPassword = (EditText) findViewById(R.id.etSignupPassword);
@@ -58,9 +57,21 @@ public class SignupActivity extends AppCompatActivity {
         etSignupLastName = (EditText) findViewById(R.id.etSignupLastName);
         etSignupEmail = (EditText) findViewById(R.id.etSignupEmail);
         spSignupGender = (Spinner) findViewById(R.id.spSignupGender);
+
     }
 
-    public void btnSignupClick(View view){
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        this.finish();
+        return true;
+    }
+
+    public void btnSignupClick(View view) {
         try {
             String acc_user = etSignupUsername.getText().toString();
             String acc_pass = etSignupPassword.getText().toString();
@@ -148,7 +159,7 @@ public class SignupActivity extends AppCompatActivity {
                     }
                 }) {
             @Override
-            protected Map<String, String> getParams(){
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put(Account.ACCOUNT_USERNAME, account.getAcc_user());
                 params.put(Account.ACCOUNT_PASSWORD, account.getAcc_pass());

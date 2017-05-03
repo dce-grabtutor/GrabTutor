@@ -33,7 +33,7 @@ public class Account {
     private String acc_token;
 
     private double acc_longitude;
-    private double acc_latitde;
+    private double acc_latitude;
 
     public int getAcc_id() {
         return acc_id;
@@ -123,12 +123,16 @@ public class Account {
         this.acc_longitude = acc_longitude;
     }
 
-    public double getAcc_latitde() {
-        return acc_latitde;
+    public double getAcc_latitude() {
+        return acc_latitude;
     }
 
-    public void setAcc_latitde(double acc_latitde) {
-        this.acc_latitde = acc_latitde;
+    public void setAcc_latitude(double acc_latitude) {
+        this.acc_latitude = acc_latitude;
+    }
+
+    public String getFullName() {
+        return acc_lname + ", " + acc_fname + " " + acc_mname;
     }
 
 }

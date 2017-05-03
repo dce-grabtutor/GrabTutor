@@ -67,4 +67,6 @@
     </string>
     <string name="title_activity_student_tutor_search_settings">StudentTutorSearchSettingsActivity
     </string>
+    <string name="title_activity_student_tutor_search_list">StudentTutorSearchListActivity</string>
+    <string name="title_activity_signup">SignupActivity</string>
 </resources>
