@@ -1,4 +1,4 @@
-package com.dce.grabtutor.Model;
+package com.dce.grabtutor.Service.Model;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

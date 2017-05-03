@@ -1,6 +1,5 @@
 package com.dce.grabtutor;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -12,25 +11,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.dce.grabtutor.Handler.AccountHandler;
-import com.dce.grabtutor.Model.Account;
-import com.dce.grabtutor.Model.Conversation;
-import com.dce.grabtutor.Model.URI;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import com.dce.grabtutor.Service.Model.Account;
 
 public class StudentMenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {

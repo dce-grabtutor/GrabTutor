@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.dce.grabtutor.Handler.AccountHandler;
-import com.dce.grabtutor.Model.Account;
+import com.dce.grabtutor.Service.Model.Account;
 
 public class UserSelectActivity extends AppCompatActivity {
 
