@@ -32,4 +32,5 @@ public class URI {
     public static final String USER_SEARCH_DISTANCE_UPDATE = HOST + "user_search_distance_update.php";
 
     public static final String TUTOR_SEARCH = HOST + "tutor_search.php";
+    public static final String TUTOR_BOOKING = HOST + "tutor_booking.php";
 }

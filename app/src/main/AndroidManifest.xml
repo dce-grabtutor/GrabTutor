@@ -104,6 +104,10 @@
         <activity
             android:name=".SignupActivity"
             android:label="@string/title_activity_signup"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".StudentTutorSearchInformationActivity"
+            android:label="@string/title_activity_student_tutor_search_information"
             android:theme="@style/AppTheme"></activity>
     </application>
 

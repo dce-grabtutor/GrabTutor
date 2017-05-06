@@ -372,8 +372,10 @@ public class StudentTutorSearchActivity extends AppCompatActivity implements OnM
                                             Intent intent = new Intent(StudentTutorSearchActivity.this, StudentTutorSearchListActivity.class);
                                             startActivity(intent);
                                         } else {
-                                            Toast.makeText(StudentTutorSearchActivity.this, "No Tutors Found, Please Try Again", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(StudentTutorSearchActivity.this, "No Tutors Found", Toast.LENGTH_SHORT).show();
                                         }
+                                    } else {
+                                        Toast.makeText(StudentTutorSearchActivity.this, "No Tutors Found", Toast.LENGTH_SHORT).show();
                                     }
                                 } catch (Exception ex) {
                                     ex.printStackTrace();
