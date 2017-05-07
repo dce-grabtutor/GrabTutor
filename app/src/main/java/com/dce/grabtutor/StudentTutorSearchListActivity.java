@@ -45,6 +45,17 @@ public class StudentTutorSearchListActivity extends AppCompatActivity {
         adapter.notifyDataSetChanged();
     }
 
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        this.finish();
+        return true;
+    }
+
     public class TutorListAdapter extends RecyclerView.Adapter<TutorListAdapter.ViewHolder> {
 
         Context context;

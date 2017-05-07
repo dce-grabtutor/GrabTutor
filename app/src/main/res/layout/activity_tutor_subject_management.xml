@@ -20,9 +20,7 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="16dp"
@@ -40,21 +38,45 @@
                 android:layout_width="match_parent"
                 android:layout_height="32dp"
                 android:onClick="cbSubjectClick"
-                android:text="Math" />
+                android:text="Math"
+                android:textSize="18sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@android:color/darker_gray" />
 
             <CheckBox
                 android:id="@+id/cbScience"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:onClick="cbSubjectClick"
-                android:text="Science" />
+                android:text="Science"
+                android:textSize="18sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@android:color/darker_gray" />
 
             <CheckBox
                 android:id="@+id/cbEnglish"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:onClick="cbSubjectClick"
-                android:text="English" />
+                android:text="English"
+                android:textSize="18sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@android:color/darker_gray" />
 
         </LinearLayout>
 

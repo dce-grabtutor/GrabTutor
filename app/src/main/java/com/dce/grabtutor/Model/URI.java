@@ -36,4 +36,8 @@ public class URI {
 
     public static final String TUTOR_SUBJECT_UPDATE = HOST + "tutor_subject_update.php";
     public static final String TUTOR_SUBJECT_LOAD = HOST + "tutor_subject_load.php";
+
+    public static final String TUTOR_REQUEST_LOAD = HOST + "tutor_request_load.php";
+    public static final String TUTOR_REQUEST_ACCEPT = HOST + "tutor_request_accept.php";
+    public static final String TUTOR_REQUEST_DECLINE = HOST + "tutor_request_decline.php";
 }

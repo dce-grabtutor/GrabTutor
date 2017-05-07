@@ -112,6 +112,10 @@
         <activity
             android:name=".TutorSubjectManagementActivity"
             android:label="@string/title_activity_tutor_subject_management"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".TutorTutorialRequestListActivity"
+            android:label="@string/title_activity_tutor_tutorial_request_list"
             android:theme="@style/AppTheme"></activity>
     </application>
 
