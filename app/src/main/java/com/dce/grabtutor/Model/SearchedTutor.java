@@ -12,6 +12,7 @@ public class SearchedTutor {
 
     private Account account;
     private Schedule schedule;
+    private int distance;
 
     public Account getAccount() {
         return account;
@@ -29,4 +30,11 @@ public class SearchedTutor {
         this.schedule = schedule;
     }
 
+    public int getDistance() {
+        return distance;
+    }
+
+    public void setDistance(int distance) {
+        this.distance = distance;
+    }
 }

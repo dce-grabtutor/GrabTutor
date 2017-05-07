@@ -75,7 +75,7 @@ public class StudentTutorSearchListActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(ViewHolder holder, final int position) {
             SearchedTutor searchedTutor = SearchedTutor.searchedTutors.get(position);
-            Account tutorAccount = searchedTutor.getAccount();
+            final Account tutorAccount = searchedTutor.getAccount();
             Schedule tutorSchedule = searchedTutor.getSchedule();
 
             holder.cvStudentTutorList.setOnClickListener(new View.OnClickListener() {
@@ -109,6 +109,7 @@ public class StudentTutorSearchListActivity extends AppCompatActivity {
                 endMeridiem = startMeridiem;
             }
 
+            holder.tvTutorDistance.setText(String.valueOf(searchedTutor.getDistance() + " Km"));
             holder.tvTutorScheduleTime.setText(String.format("%02d", startHour) + ":" + String.format("%02d", tutorSchedule.getSched_minute()) + " " + startMeridiem + " - " + String.format("%02d", endHour) + ":" + String.format("%02d", tutorSchedule.getSched_minute()) + " " + endMeridiem);
             holder.tvTutorScheduleDay.setText(tutorSchedule.getSched_day());
         }
@@ -125,6 +126,7 @@ public class StudentTutorSearchListActivity extends AppCompatActivity {
             TextView tvTutorUsername;
             TextView tvTutorScheduleTime;
             TextView tvTutorScheduleDay;
+            TextView tvTutorDistance;
 
             public ViewHolder(View itemView) {
                 super(itemView);
@@ -133,6 +135,7 @@ public class StudentTutorSearchListActivity extends AppCompatActivity {
                 tvTutorUsername = (TextView) itemView.findViewById(R.id.tvTutorUsername);
                 tvTutorScheduleTime = (TextView) itemView.findViewById(R.id.tvTutorScheduleTime);
                 tvTutorScheduleDay = (TextView) itemView.findViewById(R.id.tvTutorScheduleDay);
+                tvTutorDistance = (TextView) itemView.findViewById(R.id.tvTutorDistance);
 
                 cvStudentTutorList = (CardView) itemView.findViewById(R.id.cvStudentTutorSearchList);
             }

@@ -579,8 +579,14 @@ public class TutorMenuActivity extends AppCompatActivity
                                     account.setAcc_longitude(jsonAccount.getDouble(Account.ACCOUNT_LONGITUDE));
                                     account.setAcc_latitude(jsonAccount.getDouble(Account.ACCOUNT_LATITUDE));
 
+                                    JSONObject jsonSubject = jsonPendingBooking.getJSONObject("subject");
+                                    Subject subject = new Subject();
+                                    subject.setSubj_id(jsonSubject.getInt(Subject.SUBJECT_ID));
+                                    subject.setSubj_name(jsonSubject.getString(Subject.SUBJECT_NAME));
+
                                     pendingBooking.setSchedule(schedule);
                                     pendingBooking.setAccount(account);
+                                    pendingBooking.setSubject(subject);
 
                                     PendingBooking.pendingBookings.add(pendingBooking);
                                 }

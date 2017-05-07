@@ -28,6 +28,10 @@ public class UserSelectActivity extends AppCompatActivity {
                     Intent menuIntent = new Intent(this, TutorMenuActivity.class);
                     Account.loggedAccount = account;
                     startActivity(menuIntent);
+                } else if (account.getAcc_type().equals(LoginActivity.USER_TYPE_ADMIN)) {
+                    Intent menuIntent = new Intent(this, AdminMenuActivity.class);
+                    Account.loggedAccount = account;
+                    startActivity(menuIntent);
                 }
             }
         } catch (Exception ex) {

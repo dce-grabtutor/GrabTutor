@@ -13,6 +13,7 @@ public class PendingBooking {
     private int pb_id;
     private Schedule schedule;
     private Account account;
+    private Subject subject;
 
     public int getPb_id() {
         return pb_id;
@@ -38,4 +39,11 @@ public class PendingBooking {
         this.account = account;
     }
 
+    public Subject getSubject() {
+        return subject;
+    }
+
+    public void setSubject(Subject subject) {
+        this.subject = subject;
+    }
 }

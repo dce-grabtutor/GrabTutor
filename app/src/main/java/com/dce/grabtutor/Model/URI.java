@@ -38,6 +38,8 @@ public class URI {
     public static final String TUTOR_SUBJECT_LOAD = HOST + "tutor_subject_load.php";
 
     public static final String TUTOR_REQUEST_LOAD = HOST + "tutor_request_load.php";
+    public static final String TUTOR_REQUEST_APPROVE = HOST + "tutor_request_approve.php";
+    public static final String TUTOR_REQUEST_DECLINE = HOST + "tutor_request_decline.php";
 
     public static final String TUTOR_UPLOAD = HOST + "tutor_upload.php";
     public static final String TUTOR_UPLOAD_REQUEST = HOST + "tutorUpload.php";

@@ -20,6 +20,7 @@ import com.android.volley.toolbox.Volley;
 import com.dce.grabtutor.Model.Account;
 import com.dce.grabtutor.Model.Schedule;
 import com.dce.grabtutor.Model.SearchedTutor;
+import com.dce.grabtutor.Model.Subject;
 import com.dce.grabtutor.Model.URI;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.maps.CameraUpdate;
@@ -41,6 +42,8 @@ import java.util.Map;
 public class StudentTutorSearchInformationActivity extends AppCompatActivity implements OnMapReadyCallback,
         LocationListener {
 
+    public static String subj_name;
+
     Location mLastLocation;
     Marker mCurrLocationMarker;
     GoogleMap mMap;
@@ -56,7 +59,7 @@ public class StudentTutorSearchInformationActivity extends AppCompatActivity imp
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
-        intent.getIntExtra("position", 0);
+        position = intent.getIntExtra("position", 0);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -177,7 +180,9 @@ public class StudentTutorSearchInformationActivity extends AppCompatActivity imp
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put(Schedule.SCHEDULE_ID, String.valueOf(SearchedTutor.searchedTutors.get(position).getSchedule().getSched_id()));
-                params.put(Account.ACCOUNT_ID, String.valueOf(Account.loggedAccount.getAcc_id()));
+                params.put("tutor_id", String.valueOf(SearchedTutor.searchedTutors.get(position).getAccount().getAcc_id()));
+                params.put(Subject.SUBJECT_NAME, subj_name);
+                params.put("student_id", String.valueOf(Account.loggedAccount.getAcc_id()));
                 return params;
             }
         };

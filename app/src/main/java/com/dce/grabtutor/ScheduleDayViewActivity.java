@@ -35,7 +35,7 @@ public class ScheduleDayViewActivity extends AppCompatActivity {
 
     RecyclerView rvAvailable;
     RecyclerView rvReserved;
-    View vRvScheduleDayDivider;
+//    View vRvScheduleDayDivider;
 
     ScheduleAvailableAdapter adapterAvailable;
     ScheduleReservedAdapter adapterReserved;
@@ -64,7 +64,7 @@ public class ScheduleDayViewActivity extends AppCompatActivity {
         LinearLayoutManager llm2 = new LinearLayoutManager(this);
         rvReserved.setLayoutManager(llm2);
 
-        vRvScheduleDayDivider = (View) findViewById(R.id.vRvScheduleDayDivider);
+//        vRvScheduleDayDivider = (View) findViewById(R.id.vRvScheduleDayDivider);
         loadViews();
     }
 
@@ -87,7 +87,7 @@ public class ScheduleDayViewActivity extends AppCompatActivity {
 
             if (reservedCount < 1) {
                 (rvAvailable.getLayoutParams()).height = RecyclerView.LayoutParams.MATCH_PARENT;
-                vRvScheduleDayDivider.setVisibility(View.GONE);
+//                vRvScheduleDayDivider.setVisibility(View.GONE);
             }
         } else {
             if (day.equals("Tuesday")) {
@@ -96,7 +96,7 @@ public class ScheduleDayViewActivity extends AppCompatActivity {
 
                 if (reservedCount < 1) {
                     (rvAvailable.getLayoutParams()).height = RecyclerView.LayoutParams.MATCH_PARENT;
-                    vRvScheduleDayDivider.setVisibility(View.GONE);
+//                    vRvScheduleDayDivider.setVisibility(View.GONE);
                 }
             } else if (day.equals("Wednesday")) {
                 schedules = Schedule.schedules_wednesday;
@@ -104,7 +104,7 @@ public class ScheduleDayViewActivity extends AppCompatActivity {
 
                 if (reservedCount < 1) {
                     (rvAvailable.getLayoutParams()).height = RecyclerView.LayoutParams.MATCH_PARENT;
-                    vRvScheduleDayDivider.setVisibility(View.GONE);
+//                    vRvScheduleDayDivider.setVisibility(View.GONE);
                 }
             } else if (day.equals("Thursday")) {
                 schedules = Schedule.schedules_thursday;
@@ -112,7 +112,7 @@ public class ScheduleDayViewActivity extends AppCompatActivity {
 
                 if (reservedCount < 1) {
                     (rvAvailable.getLayoutParams()).height = RecyclerView.LayoutParams.MATCH_PARENT;
-                    vRvScheduleDayDivider.setVisibility(View.GONE);
+//                    vRvScheduleDayDivider.setVisibility(View.GONE);
                 }
             } else if (day.equals("Friday")) {
                 schedules = Schedule.schedules_friday;
@@ -120,7 +120,7 @@ public class ScheduleDayViewActivity extends AppCompatActivity {
 
                 if (reservedCount < 1) {
                     (rvAvailable.getLayoutParams()).height = RecyclerView.LayoutParams.MATCH_PARENT;
-                    vRvScheduleDayDivider.setVisibility(View.GONE);
+//                    vRvScheduleDayDivider.setVisibility(View.GONE);
                 }
             } else if (day.equals("Saturday")) {
                 schedules = Schedule.schedules_saturday;
@@ -128,7 +128,7 @@ public class ScheduleDayViewActivity extends AppCompatActivity {
 
                 if (reservedCount < 1) {
                     (rvAvailable.getLayoutParams()).height = RecyclerView.LayoutParams.MATCH_PARENT;
-                    vRvScheduleDayDivider.setVisibility(View.GONE);
+//                    vRvScheduleDayDivider.setVisibility(View.GONE);
                 }
             } else if (day.equals("Sunday")) {
                 schedules = Schedule.schedules_sunday;
@@ -136,7 +136,7 @@ public class ScheduleDayViewActivity extends AppCompatActivity {
 
                 if (reservedCount < 1) {
                     (rvAvailable.getLayoutParams()).height = RecyclerView.LayoutParams.MATCH_PARENT;
-                    vRvScheduleDayDivider.setVisibility(View.GONE);
+//                    vRvScheduleDayDivider.setVisibility(View.GONE);
                 }
             }
         }

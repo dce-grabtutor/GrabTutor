@@ -90,15 +90,8 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".StudentTutorSearchActivity"
-            android:label="@string/title_activity_tutor_student_search" />
-        <activity
             android:name=".StudentTutorSearchScheduleManagementActivity"
             android:label="@string/title_activity_student_tutor_search_schedule"
-            android:theme="@style/AppTheme" />
-        <activity
-            android:name=".StudentTutorSearchSettingsActivity"
-            android:label="@string/title_activity_student_tutor_search_settings"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".StudentTutorSearchListActivity"
