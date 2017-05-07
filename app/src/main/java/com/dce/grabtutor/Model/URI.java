@@ -40,4 +40,5 @@ public class URI {
     public static final String TUTOR_REQUEST_LOAD = HOST + "tutor_request_load.php";
 
     public static final String TUTOR_UPLOAD = HOST + "tutor_upload.php";
+    public static final String TUTOR_UPLOAD_REQUEST = HOST + "tutorUpload.php";
 }

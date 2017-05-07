@@ -38,12 +38,13 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+
 public class UploadTutorActivity extends AppCompatActivity implements View.OnClickListener{
 
     private static final int PICK_FILE_REQUEST = 1;
     private static final String TAG = UploadTutorActivity.class.getSimpleName();
     private String selectedFilePath;
-    private String SERVER_URL = "INSERT URL HERE";
+    private String SERVER_URL = URI.TUTOR_UPLOAD_REQUEST
     ImageView ivAttachment;
     Button bUpload;
     TextView tvFileName;
@@ -211,7 +212,7 @@ public class UploadTutorActivity extends AppCompatActivity implements View.OnCli
                         public void run() {
                             tvFileName.setText("File Upload completed.");
 
-                            StringRequest stringRequest = new StringRequest(Request.Method.POST, URI.SIGNUP,
+                            StringRequest stringRequest = new StringRequest(Request.Method.POST, URI.TUTOR_UPLOAD,
                                     new Response.Listener<String>() {
                                         @Override
                                         public void onResponse(String response) {
