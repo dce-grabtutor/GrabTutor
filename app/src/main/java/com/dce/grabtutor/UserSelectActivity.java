@@ -10,10 +10,13 @@ import com.dce.grabtutor.Model.Account;
 
 public class UserSelectActivity extends AppCompatActivity {
 
+    int adminLoginCounter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_select);
+
         try {
             Account account = new AccountHandler(this).getLoggedAccount();
             if (account.getAcc_id() > 0) {
@@ -32,17 +35,33 @@ public class UserSelectActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        adminLoginCounter = 0;
+    }
+
+    @Override
+    public void onBackPressed() {
+        adminLoginCounter++;
+
+        if (adminLoginCounter == 10) {
+            Intent intent = new Intent(this, LoginActivity.class);
+            intent.putExtra("UserType", LoginActivity.USER_TYPE_ADMIN);
+            startActivity(intent);
+        }
+    }
+
+
     public void btnStudentTypeClick(View view) {
         Intent intent = new Intent(this, LoginActivity.class);
         intent.putExtra("UserType", LoginActivity.USER_TYPE_STUDENT);
-
         startActivity(intent);
     }
 
     public void btnTutorTypeClick(View view) {
         Intent intent = new Intent(this, LoginActivity.class);
         intent.putExtra("UserType", LoginActivity.USER_TYPE_TUTOR);
-
         startActivity(intent);
     }
 }

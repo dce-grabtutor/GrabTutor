@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.dce.grabtutor.TutorTutorialRequestListActivity">
+    tools:context="com.dce.grabtutor.AdminMenuActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -25,17 +25,10 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="16dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context="com.dce.grabtutor.TutorTutorialRequestListActivity"
-        tools:showIn="@layout/activity_tutor_tutorial_request_list">
+        tools:context="com.dce.grabtutor.AdminMenuActivity"
+        tools:showIn="@layout/app_bar_admin_menu">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rvTutorialRequest"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentTop="true" />
     </RelativeLayout>
-
 
 </android.support.design.widget.CoordinatorLayout>

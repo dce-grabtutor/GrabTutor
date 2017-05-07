@@ -30,6 +30,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public static final String USER_TYPE_STUDENT = "Student";
     public static final String USER_TYPE_TUTOR = "Tutor";
+    public static final String USER_TYPE_ADMIN = "Admin";
 
     public static boolean loggedOut = false;
     EditText etLoginUsername;
@@ -119,6 +120,9 @@ public class LoginActivity extends AppCompatActivity {
                                     startActivity(intent);
                                 } else if (account.getAcc_type().equals(USER_TYPE_TUTOR)) {
                                     Intent intent = new Intent(LoginActivity.this, TutorMenuActivity.class);
+                                    startActivity(intent);
+                                } else if (account.getAcc_type().equals(USER_TYPE_ADMIN)) {
+                                    Intent intent = new Intent(LoginActivity.this, AdminMenuActivity.class);
                                     startActivity(intent);
                                 }
                             }

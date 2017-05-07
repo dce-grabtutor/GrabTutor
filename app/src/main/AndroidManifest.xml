@@ -7,6 +7,8 @@
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -116,12 +118,15 @@
         <activity
             android:name=".TutorTutorialRequestListActivity"
             android:label="@string/title_activity_tutor_tutorial_request_list"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".UploadTutorActivity"
             android:label="@string/title_activity_tutor_upload"
             android:theme="@style/AppTheme" />
-
+        <activity
+            android:name=".AdminMenuActivity"
+            android:label="@string/title_activity_admin_menu"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
