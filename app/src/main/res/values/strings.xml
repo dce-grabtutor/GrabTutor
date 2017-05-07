@@ -75,4 +75,6 @@
     <string name="title_activity_tutor_subject_management">TutorSubjectManagementActivity</string>
     <string name="title_activity_tutor_tutorial_request_list">TutorTutorialRequestListActivity
     </string>
+    <string name="title_activity_tutor_upload">TutorUploadActivity
+    </string>
 </resources>

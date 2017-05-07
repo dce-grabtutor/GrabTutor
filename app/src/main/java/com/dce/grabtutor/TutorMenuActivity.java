@@ -107,6 +107,11 @@ public class TutorMenuActivity extends AppCompatActivity
             loadTutorialRequests();
         } else if (id == R.id.nav_messages) {
             loadConversations();
+        } else if (id == R.id.nav_upload) {
+            Intent intent = new Intent(this, UploadTutorActivity.class);
+
+            startActivity(intent);
+
         } else if (id == R.id.nav_logout) {
             LoginActivity.loggedOut = true;
             this.finish();

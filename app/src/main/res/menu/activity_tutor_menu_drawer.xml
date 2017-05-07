@@ -13,6 +13,10 @@
             android:id="@+id/nav_subjects"
             android:icon="@drawable/ic_menu_subjects"
             android:title="My Subjects" />
+        <item
+            android:id="@+id/nav_upload"
+            android:icon="@drawable/ic_menu_repository"
+            android:title="Upload File" />
 
         <item
             android:id="@+id/nav_tutor_requests"
