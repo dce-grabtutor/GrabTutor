@@ -1,6 +1,7 @@
 package com.dce.grabtutor;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
@@ -33,13 +34,26 @@ public class StudentTutorSearchListActivity extends AppCompatActivity {
         rv = (RecyclerView) findViewById(R.id.rvStudentTutorSearchList);
         LinearLayoutManager llm = new LinearLayoutManager(this);
         rv.setLayoutManager(llm);
+
+        adapter = new TutorListAdapter(this);
+        rv.setAdapter(adapter);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        adapter = new TutorListAdapter(this);
-        rv.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        this.finish();
+        return true;
     }
 
     public class TutorListAdapter extends RecyclerView.Adapter<TutorListAdapter.ViewHolder> {
@@ -59,10 +73,19 @@ public class StudentTutorSearchListActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onBindViewHolder(ViewHolder holder, int position) {
+        public void onBindViewHolder(ViewHolder holder, final int position) {
             SearchedTutor searchedTutor = SearchedTutor.searchedTutors.get(position);
             Account tutorAccount = searchedTutor.getAccount();
             Schedule tutorSchedule = searchedTutor.getSchedule();
+
+            holder.cvStudentTutorList.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(StudentTutorSearchListActivity.this, StudentTutorSearchInformationActivity.class);
+                    intent.putExtra("position", position);
+                    startActivity(intent);
+                }
+            });
 
             holder.tvTutorName.setText(tutorAccount.getFullName());
             holder.tvTutorUsername.setText(tutorAccount.getAcc_user());

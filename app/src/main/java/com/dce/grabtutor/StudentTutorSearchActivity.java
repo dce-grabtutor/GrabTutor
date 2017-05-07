@@ -143,6 +143,9 @@ public class StudentTutorSearchActivity extends AppCompatActivity implements OnM
         //Place current location marker
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
 
+        Account.loggedAccount.setAcc_latitude(location.getLatitude());
+        Account.loggedAccount.setAcc_longitude(location.getLongitude());
+
 //        MarkerOptions markerOptions = new MarkerOptions();
 //        markerOptions.position(latLng);
 //        markerOptions.title("Current Position");
@@ -364,6 +367,17 @@ public class StudentTutorSearchActivity extends AppCompatActivity implements OnM
                                             searchedTutor.setAccount(account);
                                             searchedTutor.setSchedule(schedule);
 
+                                            Location locationTutor = new Location("");
+                                            locationTutor.setLatitude(account.getAcc_latitude());
+                                            locationTutor.setLongitude(account.getAcc_longitude());
+
+                                            Location locationCurrent = new Location("");
+                                            locationCurrent.setLatitude(Account.loggedAccount.getAcc_latitude());
+                                            locationCurrent.setLongitude(Account.loggedAccount.getAcc_longitude());
+
+                                            double distanceInKilometers = (double) locationCurrent.distanceTo(locationTutor) / 1000;
+                                            Toast.makeText(StudentTutorSearchActivity.this, String.valueOf(distanceInKilometers), Toast.LENGTH_SHORT).show();
+
                                             SearchedTutor.searchedTutors.add(searchedTutor);
                                             count++;
                                         }
@@ -372,8 +386,10 @@ public class StudentTutorSearchActivity extends AppCompatActivity implements OnM
                                             Intent intent = new Intent(StudentTutorSearchActivity.this, StudentTutorSearchListActivity.class);
                                             startActivity(intent);
                                         } else {
-                                            Toast.makeText(StudentTutorSearchActivity.this, "No Tutors Found, Please Try Again", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(StudentTutorSearchActivity.this, "No Tutors Found", Toast.LENGTH_SHORT).show();
                                         }
+                                    } else {
+                                        Toast.makeText(StudentTutorSearchActivity.this, "No Tutors Found", Toast.LENGTH_SHORT).show();
                                     }
                                 } catch (Exception ex) {
                                     ex.printStackTrace();

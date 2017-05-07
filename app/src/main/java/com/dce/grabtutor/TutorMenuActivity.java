@@ -21,6 +21,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.dce.grabtutor.Model.Account;
 import com.dce.grabtutor.Model.Aptitude;
+import com.dce.grabtutor.Model.PendingBooking;
 import com.dce.grabtutor.Model.Schedule;
 import com.dce.grabtutor.Model.Subject;
 import com.dce.grabtutor.Model.TrackGPS;
@@ -100,6 +101,10 @@ public class TutorMenuActivity extends AppCompatActivity
 
         if (id == R.id.nav_schedule) {
             loadSchedules();
+        } else if (id == R.id.nav_subjects) {
+            loadSubjects();
+        } else if (id == R.id.nav_tutor_requests) {
+            loadTutorialRequests();
         } else if (id == R.id.nav_messages) {
             loadConversations();
         } else if (id == R.id.nav_logout) {
@@ -118,8 +123,62 @@ public class TutorMenuActivity extends AppCompatActivity
         startActivity(intent);
     }
 
+    public void loadSubjects() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URI.TUTOR_SUBJECT_LOAD,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        System.out.println(response);
+
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            Subject.currentSubjects = new ArrayList<>();
+
+                            if (jsonObject.getBoolean("success")) {
+
+                                JSONArray jsonArray = jsonObject.getJSONArray("subjects");
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject jsonSubject = jsonArray.getJSONObject(i);
+
+                                    Subject subject = new Subject();
+                                    subject.setSubj_id(jsonSubject.getInt(Subject.SUBJECT_ID));
+                                    subject.setSubj_name(jsonSubject.getString(Subject.SUBJECT_NAME));
+
+                                    Subject.currentSubjects.add(subject);
+                                }
+
+                                Intent intent = new Intent(TutorMenuActivity.this, TutorSubjectManagementActivity.class);
+                                startActivity(intent);
+                            }
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                },
+
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                        Toast.makeText(TutorMenuActivity.this, "Connection Failed", Toast.LENGTH_SHORT).show();
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put(Account.ACCOUNT_ID, String.valueOf(Account.loggedAccount.getAcc_id()));
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
     // Schedules
     public void loadSchedules() {
+
         Schedule.schedules_monday = new ArrayList<>();
         Schedule.schedules_tuesday = new ArrayList<>();
         Schedule.schedules_wednesday = new ArrayList<>();
@@ -465,6 +524,83 @@ public class TutorMenuActivity extends AppCompatActivity
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put(Schedule.SCHEDULE_ACC_ID, String.valueOf(Account.loggedAccount.getAcc_id()));
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
+    public void loadTutorialRequests() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URI.TUTOR_REQUEST_LOAD,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        System.out.println(response);
+
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            PendingBooking.pendingBookings = new ArrayList<>();
+
+                            if (jsonObject.getBoolean("success")) {
+
+                                JSONArray arrayPendingBookings = jsonObject.getJSONArray("pending_bookings");
+                                for (int i = 0; i < arrayPendingBookings.length(); i++) {
+                                    JSONObject jsonPendingBooking = arrayPendingBookings.getJSONObject(i);
+                                    PendingBooking pendingBooking = new PendingBooking();
+                                    pendingBooking.setPb_id(jsonPendingBooking.getInt(PendingBooking.PENDING_BOOKING_ID));
+
+                                    JSONObject jsonSchedule = jsonPendingBooking.getJSONObject("schedule");
+                                    Schedule schedule = new Schedule();
+                                    schedule.setSched_id(jsonSchedule.getInt(Schedule.SCHEDULE_ID));
+                                    schedule.setSched_day(jsonSchedule.getString(Schedule.SCHEDULE_DAY));
+                                    schedule.setSched_hour(jsonSchedule.getInt(Schedule.SCHEDULE_HOUR));
+                                    schedule.setSched_minute(jsonSchedule.getInt(Schedule.SCHEDULE_MINUTE));
+                                    schedule.setSched_meridiem(jsonSchedule.getString(Schedule.SCHEUDLE_MERIDIEM));
+                                    schedule.setAcc_id(jsonSchedule.getInt(Account.ACCOUNT_ID));
+
+                                    JSONObject jsonAccount = jsonPendingBooking.getJSONObject("account");
+                                    Account account = new Account();
+                                    account.setAcc_id(jsonAccount.getInt(Account.ACCOUNT_ID));
+                                    account.setAcc_user(jsonAccount.getString(Account.ACCOUNT_USERNAME));
+                                    account.setAcc_fname(jsonAccount.getString(Account.ACCOUNT_FIRST_NAME));
+                                    account.setAcc_mname(jsonAccount.getString(Account.ACCOUNT_MIDDLE_NAME));
+                                    account.setAcc_lname(jsonAccount.getString(Account.ACCOUNT_LAST_NAME));
+                                    account.setAcc_email(jsonAccount.getString(Account.ACCOUNT_EMAIL));
+                                    account.setAcc_gender(jsonAccount.getString(Account.ACCOUNT_GENDER));
+                                    account.setAcc_type(jsonAccount.getString(Account.ACCOUNT_TYPE));
+                                    account.setAcc_token(jsonAccount.getString(Account.ACCOUNT_TOKEN));
+                                    account.setAcc_longitude(jsonAccount.getDouble(Account.ACCOUNT_LONGITUDE));
+                                    account.setAcc_latitude(jsonAccount.getDouble(Account.ACCOUNT_LATITUDE));
+
+                                    pendingBooking.setSchedule(schedule);
+                                    pendingBooking.setAccount(account);
+
+                                    PendingBooking.pendingBookings.add(pendingBooking);
+                                }
+                            }
+
+                            Intent intent = new Intent(TutorMenuActivity.this, TutorTutorialRequestListActivity.class);
+                            startActivity(intent);
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                },
+
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                        Toast.makeText(TutorMenuActivity.this, "Connection Failed", Toast.LENGTH_SHORT).show();
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put(Account.ACCOUNT_ID, String.valueOf(Account.loggedAccount.getAcc_id()));
                 return params;
             }
         };

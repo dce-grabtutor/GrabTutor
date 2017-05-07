@@ -1,5 +1,7 @@
 package com.dce.grabtutor.Model;
 
+import java.util.ArrayList;
+
 /**
  * Created by Skye on 4/30/2017.
  */
@@ -7,7 +9,7 @@ package com.dce.grabtutor.Model;
 public class Subject {
     public static final String SUBJECT_ID = "subj_id";
     public static final String SUBJECT_NAME = "subj_name";
-
+    public static ArrayList<Subject> currentSubjects;
     private int subj_id;
     private String subj_name;
 

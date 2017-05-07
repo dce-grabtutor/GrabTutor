@@ -32,4 +32,12 @@ public class URI {
     public static final String USER_SEARCH_DISTANCE_UPDATE = HOST + "user_search_distance_update.php";
 
     public static final String TUTOR_SEARCH = HOST + "tutor_search.php";
+    public static final String TUTOR_BOOKING = HOST + "tutor_booking.php";
+
+    public static final String TUTOR_SUBJECT_UPDATE = HOST + "tutor_subject_update.php";
+    public static final String TUTOR_SUBJECT_LOAD = HOST + "tutor_subject_load.php";
+
+    public static final String TUTOR_REQUEST_LOAD = HOST + "tutor_request_load.php";
+    public static final String TUTOR_REQUEST_ACCEPT = HOST + "tutor_request_accept.php";
+    public static final String TUTOR_REQUEST_DECLINE = HOST + "tutor_request_decline.php";
 }
