@@ -3,6 +3,7 @@ package com.dce.grabtutor;
 /**
  * Created by jotan on 5/2/2017.
  */
+
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -24,6 +25,7 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import com.dce.grabtutor.Model.Account;
 
 public class UploadTutorActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -35,7 +37,7 @@ public class UploadTutorActivity extends AppCompatActivity implements View.OnCli
     Button bUpload;
     TextView tvFileName;
     ProgressDialog dialog;
-
+    Account acc =new Account();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -160,7 +162,7 @@ public class UploadTutorActivity extends AppCompatActivity implements View.OnCli
                 //writing bytes to data outputstream
                 dataOutputStream.writeBytes(twoHyphens + boundary + lineEnd);
                 dataOutputStream.writeBytes("Content-Disposition: form-data; name=\"uploaded_file\";filename=\""
-                        + selectedFilePath + "\"" + lineEnd);
+                        +acc.getAcc_id()+ selectedFilePath + "\"" + lineEnd);
 
                 dataOutputStream.writeBytes(lineEnd);
 
