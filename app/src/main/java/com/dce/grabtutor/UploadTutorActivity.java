@@ -221,7 +221,7 @@ public class UploadTutorActivity extends AppCompatActivity implements View.OnCli
                                             try {
                                                 JSONObject jsonObject = new JSONObject(response);
                                                 if (jsonObject.getBoolean("success")) {
-                                                    Toast.makeText(UploadTutorActivity.this, "Signup Successful", Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(UploadTutorActivity.this, "", Toast.LENGTH_SHORT).show();
 
                                                 } else {
                                                     String error = jsonObject.getString("error");
