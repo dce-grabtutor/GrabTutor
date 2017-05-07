@@ -8,14 +8,16 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.dce.grabtutor.Model.Account;
 
 import java.io.DataOutputStream;
 import java.io.File;
@@ -25,7 +27,6 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import com.dce.grabtutor.Model.Account;
 
 public class UploadTutorActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -162,7 +163,7 @@ public class UploadTutorActivity extends AppCompatActivity implements View.OnCli
                 //writing bytes to data outputstream
                 dataOutputStream.writeBytes(twoHyphens + boundary + lineEnd);
                 dataOutputStream.writeBytes("Content-Disposition: form-data; name=\"uploaded_file\";filename=\""
-                        +acc.getAcc_id()+ selectedFilePath + "\"" + lineEnd);
+                        + selectedFilePath + "\"" + lineEnd);
 
                 dataOutputStream.writeBytes(lineEnd);
 
@@ -198,7 +199,7 @@ public class UploadTutorActivity extends AppCompatActivity implements View.OnCli
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            tvFileName.setText("File Upload completed.\n\n You can see the uploaded file here: \n\n" + "http://coderefer.com/extras/uploads/"+ fileName);
+                            tvFileName.setText("File Upload completed.");
                         }
                     });
                 }
