@@ -77,4 +77,5 @@
     </string>
     <string name="title_activity_tutor_upload">TutorUploadActivity
     </string>
+    <string name="title_activity_admin_menu">AdminMenuActivity</string>
 </resources>

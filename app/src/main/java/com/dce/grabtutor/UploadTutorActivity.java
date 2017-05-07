@@ -43,13 +43,13 @@ public class UploadTutorActivity extends AppCompatActivity implements View.OnCli
 
     private static final int PICK_FILE_REQUEST = 1;
     private static final String TAG = UploadTutorActivity.class.getSimpleName();
-    private String selectedFilePath;
-    private String SERVER_URL = URI.TUTOR_UPLOAD_REQUEST;
     ImageView ivAttachment;
     Button bUpload;
     TextView tvFileName;
     ProgressDialog dialog;
     Account account = new Account();
+    private String selectedFilePath;
+    private String SERVER_URL = URI.TUTOR_UPLOAD_REQUEST;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -226,7 +226,6 @@ public class UploadTutorActivity extends AppCompatActivity implements View.OnCli
                                                 } else {
                                                     String error = jsonObject.getString("error");
                                                     Toast.makeText(UploadTutorActivity.this, error, Toast.LENGTH_SHORT).show();
-
                                                 }
 
                                             } catch (Exception ex) {
