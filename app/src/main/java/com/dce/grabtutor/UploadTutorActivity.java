@@ -17,7 +17,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.dce.grabtutor.Model.Account;
+import com.dce.grabtutor.Model.URI;
+
+import org.json.JSONObject;
 
 import java.io.DataOutputStream;
 import java.io.File;
@@ -27,7 +36,8 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-
+import java.util.HashMap;
+import java.util.Map;
 public class UploadTutorActivity extends AppCompatActivity implements View.OnClickListener{
 
     private static final int PICK_FILE_REQUEST = 1;
@@ -38,7 +48,7 @@ public class UploadTutorActivity extends AppCompatActivity implements View.OnCli
     Button bUpload;
     TextView tvFileName;
     ProgressDialog dialog;
-    Account acc =new Account();
+    Account account = new Account();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -201,6 +211,49 @@ public class UploadTutorActivity extends AppCompatActivity implements View.OnCli
                         public void run() {
                             tvFileName.setText("File Upload completed.");
 
+                            StringRequest stringRequest = new StringRequest(Request.Method.POST, URI.SIGNUP,
+                                    new Response.Listener<String>() {
+                                        @Override
+                                        public void onResponse(String response) {
+                                            System.out.println(response);
+
+                                            try {
+                                                JSONObject jsonObject = new JSONObject(response);
+                                                if (jsonObject.getBoolean("success")) {
+                                                    Toast.makeText(UploadTutorActivity.this, "Signup Successful", Toast.LENGTH_SHORT).show();
+
+                                                } else {
+                                                    String error = jsonObject.getString("error");
+                                                    Toast.makeText(UploadTutorActivity.this, error, Toast.LENGTH_SHORT).show();
+
+                                                }
+
+                                            } catch (Exception ex) {
+                                                ex.printStackTrace();
+                                                Toast.makeText(UploadTutorActivity.this, "Update Failed", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    },
+
+                                    new Response.ErrorListener() {
+                                        @Override
+                                        public void onErrorResponse(VolleyError error) {
+                                            error.printStackTrace();
+                                            Toast.makeText(UploadTutorActivity.this, "Connection Failed", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }) {
+                                @Override
+                                protected Map<String, String> getParams() {
+                                    Map<String, String> params = new HashMap<String, String>();
+                                    params.put(Account.ACCOUNT_ID,String.valueOf( account.getAcc_user()));
+                                    params.put("file_name",selectedFilePath);
+
+                                    return params;
+                                }
+                            };
+
+                            RequestQueue requestQueue = Volley.newRequestQueue(UploadTutorActivity.this);
+                            requestQueue.add(stringRequest);
                         }
                     });
                 }
