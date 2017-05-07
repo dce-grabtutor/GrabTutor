@@ -100,6 +100,8 @@ public class TutorMenuActivity extends AppCompatActivity
 
         if (id == R.id.nav_schedule) {
             loadSchedules();
+        } else if (id == R.id.nav_subjects) {
+            loadSubjects();
         } else if (id == R.id.nav_messages) {
             loadConversations();
         } else if (id == R.id.nav_logout) {
@@ -118,8 +120,62 @@ public class TutorMenuActivity extends AppCompatActivity
         startActivity(intent);
     }
 
+    public void loadSubjects() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URI.TUTOR_SUBJECT_LOAD,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        System.out.println(response);
+
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            Subject.currentSubjects = new ArrayList<>();
+
+                            if (jsonObject.getBoolean("success")) {
+
+                                JSONArray jsonArray = jsonObject.getJSONArray("subjects");
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject jsonSubject = jsonArray.getJSONObject(i);
+
+                                    Subject subject = new Subject();
+                                    subject.setSubj_id(jsonSubject.getInt(Subject.SUBJECT_ID));
+                                    subject.setSubj_name(jsonSubject.getString(Subject.SUBJECT_NAME));
+
+                                    Subject.currentSubjects.add(subject);
+                                }
+
+                                Intent intent = new Intent(TutorMenuActivity.this, TutorSubjectManagementActivity.class);
+                                startActivity(intent);
+                            }
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                },
+
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                        Toast.makeText(TutorMenuActivity.this, "Connection Failed", Toast.LENGTH_SHORT).show();
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put(Account.ACCOUNT_ID, String.valueOf(Account.loggedAccount.getAcc_id()));
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
     // Schedules
     public void loadSchedules() {
+
         Schedule.schedules_monday = new ArrayList<>();
         Schedule.schedules_tuesday = new ArrayList<>();
         Schedule.schedules_wednesday = new ArrayList<>();

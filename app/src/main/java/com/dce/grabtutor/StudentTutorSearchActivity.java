@@ -143,6 +143,9 @@ public class StudentTutorSearchActivity extends AppCompatActivity implements OnM
         //Place current location marker
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
 
+        Account.loggedAccount.setAcc_latitude(location.getLatitude());
+        Account.loggedAccount.setAcc_longitude(location.getLongitude());
+
 //        MarkerOptions markerOptions = new MarkerOptions();
 //        markerOptions.position(latLng);
 //        markerOptions.title("Current Position");
@@ -363,6 +366,17 @@ public class StudentTutorSearchActivity extends AppCompatActivity implements OnM
                                             SearchedTutor searchedTutor = new SearchedTutor();
                                             searchedTutor.setAccount(account);
                                             searchedTutor.setSchedule(schedule);
+
+                                            Location locationTutor = new Location("");
+                                            locationTutor.setLatitude(account.getAcc_latitude());
+                                            locationTutor.setLongitude(account.getAcc_longitude());
+
+                                            Location locationCurrent = new Location("");
+                                            locationCurrent.setLatitude(Account.loggedAccount.getAcc_latitude());
+                                            locationCurrent.setLongitude(Account.loggedAccount.getAcc_longitude());
+
+                                            double distanceInKilometers = (double) locationCurrent.distanceTo(locationTutor) / 1000;
+                                            Toast.makeText(StudentTutorSearchActivity.this, String.valueOf(distanceInKilometers), Toast.LENGTH_SHORT).show();
 
                                             SearchedTutor.searchedTutors.add(searchedTutor);
                                             count++;

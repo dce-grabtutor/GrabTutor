@@ -22,13 +22,14 @@ import com.dce.grabtutor.Model.Schedule;
 import com.dce.grabtutor.Model.SearchedTutor;
 import com.dce.grabtutor.Model.URI;
 import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -99,22 +100,42 @@ public class StudentTutorSearchInformationActivity extends AppCompatActivity imp
 
         LatLng latLng = new LatLng(account.getAcc_latitude(), account.getAcc_longitude());
         //move map camera
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+//        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
 //        mMap.animateCamera(CameraUpdateFactory.zoomTo(20));
 
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
         markerOptions.title("Tutor Location");
-        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
+        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
         mCurrLocationMarker = mMap.addMarker(markerOptions);
 
-        CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(latLng)      // Sets the center of the map to location user
-                .zoom(17)                   // Sets the zoom
-                .bearing(90)                // Sets the orientation of the camera to east
-                .tilt(40)                   // Sets the tilt of the camera to 30 degrees
-                .build();                   // Creates a CameraPosition from the builder
-        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        MarkerOptions markerCurrent = new MarkerOptions();
+        markerCurrent.position(new LatLng(Account.loggedAccount.getAcc_latitude(), Account.loggedAccount.getAcc_longitude()));
+
+        markerCurrent.title("Your Location");
+        markerCurrent.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+
+        mMap.addMarker(markerCurrent);
+
+        LatLngBounds.Builder boundBuilder = new LatLngBounds.Builder();
+        boundBuilder.include(markerOptions.getPosition());
+        boundBuilder.include(markerCurrent.getPosition());
+        LatLngBounds bounds = boundBuilder.build();
+
+        int height = getResources().getDisplayMetrics().heightPixels;
+        int width = getResources().getDisplayMetrics().widthPixels;
+        int padding = (int) (width * 0.40);
+
+//        CameraPosition cameraPosition = new CameraPosition.Builder()
+//                .target(latLng)      // Sets the center of the map to location user
+//                .zoom(17)                   // Sets the zoom
+//                .bearing(90)                // Sets the orientation of the camera to east
+//                .tilt(40)                  // Sets the tilt of the camera to 30 degrees
+//                .build();                   // Creates a CameraPosition from the builder
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(bounds, width, height, padding);
+
+        mMap.moveCamera(cameraUpdate);
+        mMap.animateCamera(cameraUpdate);
     }
 
     @Override
@@ -134,6 +155,9 @@ public class StudentTutorSearchInformationActivity extends AppCompatActivity imp
                             if (jsonObject.getBoolean("success")) {
                                 SearchedTutor.searchedTutors.remove(position);
                                 Toast.makeText(StudentTutorSearchInformationActivity.this, "Tutorial Request has been sent", Toast.LENGTH_SHORT).show();
+                                finish();
+                            } else {
+                                Toast.makeText(StudentTutorSearchInformationActivity.this, "Failed to Send Tutorial Request", Toast.LENGTH_SHORT).show();
                             }
                         } catch (Exception ex) {
                             ex.printStackTrace();

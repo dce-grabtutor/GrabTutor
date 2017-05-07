@@ -72,4 +72,5 @@
     <string name="title_activity_student_tutor_search_information">
         StudentTutorSearchInformationActivity
     </string>
+    <string name="title_activity_tutor_subject_management">TutorSubjectManagementActivity</string>
 </resources>

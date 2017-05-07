@@ -53,10 +53,11 @@
                 android:orientation="vertical">
 
                 <Button
-                    android:id="@+id/btnBook"
+                    android:id="@+id/btnBookNow"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/custom_border"
+                    android:onClick="btnBookNowClick"
                     android:text="Book Now" />
             </LinearLayout>
 
