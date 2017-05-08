@@ -78,4 +78,7 @@
     <string name="title_activity_tutor_upload">TutorUploadActivity
     </string>
     <string name="title_activity_admin_menu">AdminMenuActivity</string>
+    <string name="title_activity_student_schedule_management">StudentScheduleManagementActivity
+    </string>
+    <string name="title_activity_schedule_day_view_student">ScheduleDayViewStudentActivity</string>
 </resources>

@@ -6,7 +6,7 @@ package com.dce.grabtutor.Model;
 
 public class URI {
 
-    public static final String HOST = "http://192.168.1.16/grabtutor/";
+    public static final String HOST = "http://192.168.254.104/grabtutor/";
 
     public static final String TOKEN_UPDATE = HOST + "token_update.php";
     public static final String TOKEN_REMOVE = HOST + "token_remove";
@@ -21,8 +21,9 @@ public class URI {
 
     public static final String SCHEDULE_ADD = HOST + "schedule_add.php";
     public static final String SCHEDULE_REMOVE = HOST + "schedule_remove.php";
+    public static final String SCHEDULE_REMOVE_BOOKED = HOST + "schedule_remove_booked.php";
     public static final String SCHEDULE_LOAD = HOST + "schedule_load.php";
-//    public static final String SCHEDULE_LOAD_DAY = HOST + "schedule_load_day.php";
+    public static final String SCHEDULE_LOAD_STUDENT = HOST + "schedule_load_student.php";
 
     //    public static final String APTITUDE_START = HOST + "aptitude_start.php";
     public static final String APTITUDE_EXAM = HOST + "aptitude_exam.php";

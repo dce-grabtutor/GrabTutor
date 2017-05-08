@@ -4,6 +4,7 @@
     <group
         android:id="@+id/student_menu_functions"
         android:checkableBehavior="none">
+
         <item
             android:id="@+id/nav_schedule"
             android:icon="@drawable/ic_menu_calendar"
@@ -13,10 +14,6 @@
             android:id="@+id/nav_subjects"
             android:icon="@drawable/ic_menu_subjects"
             android:title="My Subjects" />
-        <item
-            android:id="@+id/nav_upload"
-            android:icon="@drawable/ic_menu_repository"
-            android:title="Upload File" />
 
         <item
             android:id="@+id/nav_tutor_requests"
@@ -27,6 +24,12 @@
             android:id="@+id/nav_messages"
             android:icon="@drawable/ic_menu_message"
             android:title="Messages" />
+
+        <item
+            android:id="@+id/nav_upload"
+            android:icon="@drawable/ic_menu_repository"
+            android:title="Repository" />
+
     </group>
     <group
         android:id="@+id/student_menu_settings"

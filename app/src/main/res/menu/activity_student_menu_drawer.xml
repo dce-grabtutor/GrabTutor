@@ -4,10 +4,17 @@
     <group
         android:id="@+id/student_menu_functions"
         android:checkableBehavior="none">
+
+        <item
+            android:id="@+id/nav_schedule"
+            android:icon="@drawable/ic_menu_calendar"
+            android:title="My Schedule" />
+
         <item
             android:id="@+id/nav_messages"
             android:icon="@drawable/ic_menu_message"
             android:title="Messages" />
+
     </group>
     <group
         android:id="@+id/student_menu_settings"

@@ -15,8 +15,9 @@ public class Schedule {
     public static final String SCHEUDLE_MERIDIEM = "sched_meridiem";
     public static final String SCHEDULE_STATUS = "sched_status";
     public static final String SCHEDULE_ACC_ID = "acc_id";
-    public static final String SCHEDULE_BSCHED_ID = "bsched_id";
     public static final String SCHEDULE_STUD_ID = "stud_id";
+    public static final String SCHEDULE_TUTOR_ID = "tutor_id";
+
     public static ArrayList<Schedule> schedules_monday;
     public static ArrayList<Schedule> schedules_tuesday;
     public static ArrayList<Schedule> schedules_wednesday;
@@ -24,6 +25,7 @@ public class Schedule {
     public static ArrayList<Schedule> schedules_friday;
     public static ArrayList<Schedule> schedules_saturday;
     public static ArrayList<Schedule> schedules_sunday;
+
     private int sched_id;
     private String sched_day;
     private int sched_hour;
