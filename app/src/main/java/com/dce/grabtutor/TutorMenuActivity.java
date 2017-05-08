@@ -1,8 +1,15 @@
 package com.dce.grabtutor;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -24,8 +31,19 @@ import com.dce.grabtutor.Model.Aptitude;
 import com.dce.grabtutor.Model.PendingBooking;
 import com.dce.grabtutor.Model.Schedule;
 import com.dce.grabtutor.Model.Subject;
-import com.dce.grabtutor.Model.TrackGPS;
 import com.dce.grabtutor.Model.URI;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -35,13 +53,26 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TutorMenuActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener,
+        OnMapReadyCallback,
+        GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener,
+        LocationListener {
+
+    public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
 
     TextView tvNavUserFullName;
     TextView tvNavUserEmail;
     double longitude;
     double latitude;
-    private TrackGPS gps;
+
+//    TrackGPS gps;
+
+    Location mLastLocation;
+    Marker mCurrLocationMarker;
+    GoogleApiClient mGoogleApiClient;
+    LocationRequest mLocationRequest;
+    GoogleMap mMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,16 +102,13 @@ public class TutorMenuActivity extends AppCompatActivity
         tvNavUserFullName.setText(fullName);
         tvNavUserEmail.setText(email);
 
-        gps = new TrackGPS(TutorMenuActivity.this);
-        if (gps.canGetLocation()) {
-            longitude = gps.getLongitude();
-            latitude = gps.getLatitude();
-            updateLocationInServer(longitude, latitude);
-//            Toast.makeText(getApplicationContext(), "Longitude:" + Double.toString(longitude) + "\nLatitude:" + Double.toString(latitude), Toast.LENGTH_SHORT).show();
-        } else {
-            gps.showSettingsAlert();
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            checkLocationPermission();
         }
 
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
     }
 
     @Override
@@ -90,6 +118,134 @@ public class TutorMenuActivity extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
         } else {
 //            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+
+        //Initialize Google Play Services
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ContextCompat.checkSelfPermission(this,
+                    android.Manifest.permission.ACCESS_FINE_LOCATION)
+                    == PackageManager.PERMISSION_GRANTED) {
+                buildGoogleApiClient();
+                mMap.setMyLocationEnabled(true);
+            }
+        } else {
+            buildGoogleApiClient();
+            mMap.setMyLocationEnabled(true);
+        }
+    }
+
+    protected synchronized void buildGoogleApiClient() {
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
+        mGoogleApiClient.connect();
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+        mLocationRequest = new LocationRequest();
+        mLocationRequest.setInterval(1000);
+        mLocationRequest.setFastestInterval(1000);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+        if (ContextCompat.checkSelfPermission(this,
+                android.Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
+        }
+
+//        gps = new TrackGPS(TutorMenuActivity.this);
+//        if (gps.canGetLocation()) {
+//            longitude = gps.getLongitude();
+//            latitude = gps.getLatitude();
+//            Location loc = new Location("");
+//
+//            loc.setLongitude(longitude);
+//            loc.setLatitude(latitude);
+//            onLocationChanged(loc);
+////            updateLocationInServer(longitude, latitude);
+////            Toast.makeText(getApplicationContext(), "Longitude:" + Double.toString(longitude) + "\nLatitude:" + Double.toString(latitude), Toast.LENGTH_SHORT).show();
+//        } else {
+//            gps.showSettingsAlert();
+//        }
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        mLastLocation = location;
+        if (mCurrLocationMarker != null) {
+            mCurrLocationMarker.remove();
+        }
+
+        //Place current location marker
+        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+
+        Account.loggedAccount.setAcc_latitude(location.getLatitude());
+        Account.loggedAccount.setAcc_longitude(location.getLongitude());
+
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(new LatLng(location.getLatitude(), location.getLongitude()))      // Sets the center of the map to location user
+                .zoom(17)                   // Sets the zoom
+                .bearing(90)                // Sets the orientation of the camera to east
+                .tilt(40)                   // Sets the tilt of the camera to 30 degrees
+                .build();                   // Creates a CameraPosition from the builder
+        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
+        //stop location updates
+        if (mGoogleApiClient != null) {
+            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
+        }
+    }
+
+    public void btnSetLocationClick(View view) {
+        try {
+            LatLng center = mMap.getCameraPosition().target;
+            updateLocationInServer(center.longitude, center.latitude);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+    public boolean checkLocationPermission() {
+        if (ContextCompat.checkSelfPermission(this,
+                android.Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    android.Manifest.permission.ACCESS_FINE_LOCATION)) {
+
+                ActivityCompat.requestPermissions(this,
+                        new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                        MY_PERMISSIONS_REQUEST_LOCATION);
+
+
+            } else {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                        MY_PERMISSIONS_REQUEST_LOCATION);
+            }
+            return false;
+        } else {
+            return true;
         }
     }
 

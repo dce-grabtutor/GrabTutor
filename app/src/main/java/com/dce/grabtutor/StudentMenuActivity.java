@@ -64,8 +64,7 @@ public class StudentMenuActivity extends AppCompatActivity
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     TextView tvNavUserFullName;
     TextView tvNavUserEmail;
-    Location mLastLocation;
-    Marker mCurrLocationMarker;
+
     EditText etSearchRangeDistance;
     Spinner spSearchDay;
     Spinner spSearchHourFrom;
@@ -74,9 +73,11 @@ public class StudentMenuActivity extends AppCompatActivity
     Spinner spSearchMeridiemTo;
     Spinner spSearchSubject;
 
-    private GoogleApiClient mGoogleApiClient;
-    private LocationRequest mLocationRequest;
-    private GoogleMap mMap;
+    Location mLastLocation;
+    Marker mCurrLocationMarker;
+    GoogleApiClient mGoogleApiClient;
+    LocationRequest mLocationRequest;
+    GoogleMap mMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,6 +118,7 @@ public class StudentMenuActivity extends AppCompatActivity
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
         }
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);

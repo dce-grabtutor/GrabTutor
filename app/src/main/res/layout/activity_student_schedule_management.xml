@@ -1,0 +1,623 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.dce.grabtutor.StudentScheduleManagementActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context="com.dce.grabtutor.StudentScheduleManagementActivity"
+        tools:showIn="@layout/activity_student_schedule_management">
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cvStudentScheduleManagementMySchedule"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/llTutorManagementNewSchedule"
+            android:layout_alignParentTop="true"
+            app:cardUseCompatPadding="true"
+            app:contentPadding="16dp">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/cvScheduleMonday"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="cvScheduleMondayClick"
+                        app:cardUseCompatPadding="true"
+                        app:contentPadding="8dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="64dp"
+                                    android:layout_height="64dp"
+                                    android:background="@drawable/custom_circle"
+                                    android:gravity="center"
+                                    android:padding="8dp"
+                                    android:text="MON" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:gravity="center_vertical"
+                                    android:orientation="vertical">
+
+                                    <!--<LinearLayout-->
+                                    <!--android:layout_width="match_parent"-->
+                                    <!--android:layout_height="wrap_content"-->
+                                    <!--android:orientation="horizontal">-->
+
+                                    <!--<TextView-->
+                                    <!--android:layout_width="match_parent"-->
+                                    <!--android:layout_height="wrap_content"-->
+                                    <!--android:layout_weight="1"-->
+                                    <!--android:gravity="right"-->
+                                    <!--android:text="Available: " />-->
+
+                                    <!--<TextView-->
+                                    <!--android:id="@+id/tvScheduleMonAvailableCount"-->
+                                    <!--android:layout_width="match_parent"-->
+                                    <!--android:layout_height="wrap_content"-->
+                                    <!--android:layout_weight="1"-->
+                                    <!--android:text="0" />-->
+
+                                    <!--</LinearLayout>-->
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal">
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            android:gravity="right"
+                                            android:text="Reserved: " />
+
+                                        <TextView
+                                            android:id="@+id/tvScheduleMonReservedCount"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            android:text="0" />
+
+                                    </LinearLayout>
+
+                                </LinearLayout>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </android.support.v7.widget.CardView>
+
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/cvScheduleTuesday"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:onClick="cvScheduleTuesdayClick"
+                        app:cardUseCompatPadding="true"
+                        app:contentPadding="8dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="64dp"
+                                    android:layout_height="64dp"
+                                    android:background="@drawable/custom_circle"
+                                    android:gravity="center"
+                                    android:padding="8dp"
+                                    android:text="TUE" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:gravity="center_vertical"
+                                    android:orientation="vertical">
+
+                                    <!--<LinearLayout-->
+                                    <!--android:layout_width="match_parent"-->
+                                    <!--android:layout_height="wrap_content"-->
+                                    <!--android:orientation="horizontal">-->
+
+                                    <!--<TextView-->
+                                    <!--android:layout_width="match_parent"-->
+                                    <!--android:layout_height="wrap_content"-->
+                                    <!--android:layout_weight="1"-->
+                                    <!--android:gravity="right"-->
+                                    <!--android:text="Available: " />-->
+
+                                    <!--<TextView-->
+                                    <!--android:id="@+id/tvScheduleTueAvailableCount"-->
+                                    <!--android:layout_width="match_parent"-->
+                                    <!--android:layout_height="wrap_content"-->
+                                    <!--android:layout_weight="1"-->
+                                    <!--android:text="0" />-->
+
+                                    <!--</LinearLayout>-->
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal">
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            android:gravity="right"
+                                            android:text="Reserved: " />
+
+                                        <TextView
+                                            android:id="@+id/tvScheduleTueReservedCount"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            android:text="0" />
+
+                                    </LinearLayout>
+
+                                </LinearLayout>
+                            </LinearLayout>
+
+                        </LinearLayout>
+                    </android.support.v7.widget.CardView>
+
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/cvScheduleWednesday"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:onClick="cvScheduleWednesdayClick"
+                        app:cardUseCompatPadding="true"
+                        app:contentPadding="8dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="64dp"
+                                    android:layout_height="64dp"
+                                    android:background="@drawable/custom_circle"
+                                    android:gravity="center"
+                                    android:padding="8dp"
+                                    android:text="WED" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:gravity="center_vertical"
+                                    android:orientation="vertical">
+
+                                    <!--<LinearLayout-->
+                                    <!--android:layout_width="match_parent"-->
+                                    <!--android:layout_height="wrap_content"-->
+                                    <!--android:orientation="horizontal">-->
+
+                                    <!--<TextView-->
+                                    <!--android:layout_width="match_parent"-->
+                                    <!--android:layout_height="wrap_content"-->
+                                    <!--android:layout_weight="1"-->
+                                    <!--android:gravity="right"-->
+                                    <!--android:text="Available: " />-->
+
+                                    <!--<TextView-->
+                                    <!--android:id="@+id/tvScheduleWedAvailableCount"-->
+                                    <!--android:layout_width="match_parent"-->
+                                    <!--android:layout_height="wrap_content"-->
+                                    <!--android:layout_weight="1"-->
+                                    <!--android:text="0" />-->
+
+                                    <!--</LinearLayout>-->
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal">
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            android:gravity="right"
+                                            android:text="Reserved: " />
+
+                                        <TextView
+                                            android:id="@+id/tvScheduleWedReservedCount"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            android:text="0" />
+
+                                    </LinearLayout>
+
+                                </LinearLayout>
+                            </LinearLayout>
+
+                        </LinearLayout>
+                    </android.support.v7.widget.CardView>
+
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/cvScheduleThursday"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:onClick="cvScheduleThursdayClick"
+                        app:cardUseCompatPadding="true"
+                        app:contentPadding="8dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="64dp"
+                                    android:layout_height="64dp"
+                                    android:background="@drawable/custom_circle"
+                                    android:gravity="center"
+                                    android:padding="8dp"
+                                    android:text="THU" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:gravity="center_vertical"
+                                    android:orientation="vertical">
+
+                                    <!--<LinearLayout-->
+                                    <!--android:layout_width="match_parent"-->
+                                    <!--android:layout_height="wrap_content"-->
+                                    <!--android:orientation="horizontal">-->
+
+                                    <!--<TextView-->
+                                    <!--android:layout_width="match_parent"-->
+                                    <!--android:layout_height="wrap_content"-->
+                                    <!--android:layout_weight="1"-->
+                                    <!--android:gravity="right"-->
+                                    <!--android:text="Available: " />-->
+
+                                    <!--<TextView-->
+                                    <!--android:id="@+id/tvScheduleThuAvailableCount"-->
+                                    <!--android:layout_width="match_parent"-->
+                                    <!--android:layout_height="wrap_content"-->
+                                    <!--android:layout_weight="1"-->
+                                    <!--android:text="0" />-->
+
+                                    <!--</LinearLayout>-->
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal">
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            android:gravity="right"
+                                            android:text="Reserved: " />
+
+                                        <TextView
+                                            android:id="@+id/tvScheduleThuReservedCount"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            android:text="0" />
+
+                                    </LinearLayout>
+
+                                </LinearLayout>
+                            </LinearLayout>
+
+                        </LinearLayout>
+                    </android.support.v7.widget.CardView>
+
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/cvScheduleFriday"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:onClick="cvScheduleFridayClick"
+                        app:cardUseCompatPadding="true"
+                        app:contentPadding="8dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="64dp"
+                                    android:layout_height="64dp"
+                                    android:background="@drawable/custom_circle"
+                                    android:gravity="center"
+                                    android:padding="8dp"
+                                    android:text="FRI" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:gravity="center_vertical"
+                                    android:orientation="vertical">
+
+                                    <!--<LinearLayout-->
+                                    <!--android:layout_width="match_parent"-->
+                                    <!--android:layout_height="wrap_content"-->
+                                    <!--android:orientation="horizontal">-->
+
+                                    <!--<TextView-->
+                                    <!--android:layout_width="match_parent"-->
+                                    <!--android:layout_height="wrap_content"-->
+                                    <!--android:layout_weight="1"-->
+                                    <!--android:gravity="right"-->
+                                    <!--android:text="Available: " />-->
+
+                                    <!--<TextView-->
+                                    <!--android:id="@+id/tvScheduleFriAvailableCount"-->
+                                    <!--android:layout_width="match_parent"-->
+                                    <!--android:layout_height="wrap_content"-->
+                                    <!--android:layout_weight="1"-->
+                                    <!--android:text="0" />-->
+
+                                    <!--</LinearLayout>-->
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal">
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            android:gravity="right"
+                                            android:text="Reserved: " />
+
+                                        <TextView
+                                            android:id="@+id/tvScheduleFriReservedCount"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            android:text="0" />
+
+                                    </LinearLayout>
+
+                                </LinearLayout>
+                            </LinearLayout>
+
+                        </LinearLayout>
+                    </android.support.v7.widget.CardView>
+
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/cvScheduleSaturday"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:onClick="cvScheduleSaturdayClick"
+                        app:cardUseCompatPadding="true"
+                        app:contentPadding="8dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="64dp"
+                                    android:layout_height="64dp"
+                                    android:background="@drawable/custom_circle"
+                                    android:gravity="center"
+                                    android:padding="8dp"
+                                    android:text="SAT" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:gravity="center_vertical"
+                                    android:orientation="vertical">
+
+                                    <!--<LinearLayout-->
+                                    <!--android:layout_width="match_parent"-->
+                                    <!--android:layout_height="wrap_content"-->
+                                    <!--android:orientation="horizontal">-->
+
+                                    <!--<TextView-->
+                                    <!--android:layout_width="match_parent"-->
+                                    <!--android:layout_height="wrap_content"-->
+                                    <!--android:layout_weight="1"-->
+                                    <!--android:gravity="right"-->
+                                    <!--android:text="Available: " />-->
+
+                                    <!--<TextView-->
+                                    <!--android:id="@+id/tvScheduleSatAvailableCount"-->
+                                    <!--android:layout_width="match_parent"-->
+                                    <!--android:layout_height="wrap_content"-->
+                                    <!--android:layout_weight="1"-->
+                                    <!--android:text="0" />-->
+
+                                    <!--</LinearLayout>-->
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal">
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            android:gravity="right"
+                                            android:text="Reserved: " />
+
+                                        <TextView
+                                            android:id="@+id/tvScheduleSatReservedCount"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            android:text="0" />
+
+                                    </LinearLayout>
+
+                                </LinearLayout>
+                            </LinearLayout>
+
+                        </LinearLayout>
+                    </android.support.v7.widget.CardView>
+
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/cvScheduleSunday"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:onClick="cvScheduleSundayClick"
+                        app:cardUseCompatPadding="true"
+                        app:contentPadding="8dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="64dp"
+                                    android:layout_height="64dp"
+                                    android:background="@drawable/custom_circle"
+                                    android:gravity="center"
+                                    android:padding="8dp"
+                                    android:text="SUN" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:gravity="center_vertical"
+                                    android:orientation="vertical">
+
+                                    <!--<LinearLayout-->
+                                    <!--android:layout_width="match_parent"-->
+                                    <!--android:layout_height="wrap_content"-->
+                                    <!--android:orientation="horizontal">-->
+
+                                    <!--<TextView-->
+                                    <!--android:layout_width="match_parent"-->
+                                    <!--android:layout_height="wrap_content"-->
+                                    <!--android:layout_weight="1"-->
+                                    <!--android:gravity="right"-->
+                                    <!--android:text="Available: " />-->
+
+                                    <!--<TextView-->
+                                    <!--android:id="@+id/tvScheduleSunAvailableCount"-->
+                                    <!--android:layout_width="match_parent"-->
+                                    <!--android:layout_height="wrap_content"-->
+                                    <!--android:layout_weight="1"-->
+                                    <!--android:text="0" />-->
+
+                                    <!--</LinearLayout>-->
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal">
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            android:gravity="right"
+                                            android:text="Reserved: " />
+
+                                        <TextView
+                                            android:id="@+id/tvScheduleSunReservedCount"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            android:text="0" />
+
+                                    </LinearLayout>
+
+                                </LinearLayout>
+                            </LinearLayout>
+
+                        </LinearLayout>
+                    </android.support.v7.widget.CardView>
+
+                </LinearLayout>
+            </ScrollView>
+        </android.support.v7.widget.CardView>
+
+    </RelativeLayout>
+
+</android.support.design.widget.CoordinatorLayout>
