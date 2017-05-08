@@ -92,31 +92,26 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/tvSearchDistanceValue"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="right"
-                            android:text="Search Range (Distance) \n1 - 20 Km" />
+                            android:text="Search Distance - 2Km" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:orientation="horizontal">
 
-                            <EditText
-                                android:id="@+id/etSearchRangeDistance"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="2"
-                                android:hint="Km"
-                                android:inputType="number"
-                                android:text="10"
-                                android:textAlignment="textEnd" />
-
-                            <TextView
-                                android:layout_width="0dp"
+                            <SeekBar
+                                android:id="@+id/sbSearchDistance"
+                                style="@style/Widget.AppCompat.SeekBar.Discrete"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Km" />
+                                android:max="19"
+                                android:progress="1" />
+
                         </LinearLayout>
 
                     </LinearLayout>

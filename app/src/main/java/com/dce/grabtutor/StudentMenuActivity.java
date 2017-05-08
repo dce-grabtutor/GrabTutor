@@ -17,7 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
+import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -64,8 +64,10 @@ public class StudentMenuActivity extends AppCompatActivity
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     TextView tvNavUserFullName;
     TextView tvNavUserEmail;
+    TextView tvSearchDistanceValue;
 
-    EditText etSearchRangeDistance;
+    //    EditText etSearchRangeDistance;
+    SeekBar sbSearchDistance;
     Spinner spSearchDay;
     Spinner spSearchHourFrom;
     Spinner spSearchHourTo;
@@ -106,8 +108,25 @@ public class StudentMenuActivity extends AppCompatActivity
 
         tvNavUserFullName.setText(fullName);
         tvNavUserEmail.setText(email);
+        tvSearchDistanceValue = (TextView) findViewById(R.id.tvSearchDistanceValue);
 
-        etSearchRangeDistance = (EditText) findViewById(R.id.etSearchRangeDistance);
+//        etSearchRangeDistance = (EditText) findViewById(R.id.etSearchRangeDistance);
+        sbSearchDistance = (SeekBar) findViewById(R.id.sbSearchDistance);
+        sbSearchDistance.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                tvSearchDistanceValue.setText("Search Distance - " + (progress + 1) + "Km");
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+        });
+
         spSearchDay = (Spinner) findViewById(R.id.spSearchDay);
         spSearchHourFrom = (Spinner) findViewById(R.id.spSearchHourFrom);
         spSearchHourTo = (Spinner) findViewById(R.id.spSearchHourTo);
@@ -146,7 +165,8 @@ public class StudentMenuActivity extends AppCompatActivity
         } else if (id == R.id.nav_messages) {
             loadConversations();
         } else if (id == R.id.nav_logout) {
-            new AccountHandler(this).removeLoggedAccount();
+            AccountHandler accountHandler = new AccountHandler(this);
+            accountHandler.removeLoggedAccount();
             LoginActivity.loggedOut = true;
             this.finish();
         }
@@ -301,7 +321,7 @@ public class StudentMenuActivity extends AppCompatActivity
                             JSONObject jsonObject = new JSONObject(response);
 
                             if (jsonObject.getBoolean("success")) {
-                                Toast.makeText(StudentMenuActivity.this, "Location Update Sent to Server", Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(StudentMenuActivity.this, "Location Updated", Toast.LENGTH_SHORT).show();
                             }
                         } catch (Exception ex) {
                             ex.printStackTrace();
@@ -333,7 +353,7 @@ public class StudentMenuActivity extends AppCompatActivity
 
     public void btnSearchClick(View view) {
         try {
-            final int searchDistance = Integer.parseInt(etSearchRangeDistance.getText().toString());
+            final int searchDistance = (sbSearchDistance.getProgress() + 1);
             final int searchStart = Integer.parseInt(spSearchHourFrom.getSelectedItem().toString());
             final int searchEnd = Integer.parseInt(spSearchHourTo.getSelectedItem().toString());
 
@@ -399,7 +419,7 @@ public class StudentMenuActivity extends AppCompatActivity
 
                                             double distanceInKilometers = (double) locationCurrent.distanceTo(locationTutor) / 1000;
                                             if (distanceInKilometers <= searchDistance) {
-                                                searchedTutor.setDistance((int) distanceInKilometers);
+                                                searchedTutor.setDistance(Double.valueOf(distanceInKilometers).intValue());
                                                 SearchedTutor.searchedTutors.add(searchedTutor);
                                                 count++;
                                             }

@@ -35,6 +35,7 @@ public class StudentScheduleManagementActivity extends AppCompatActivity {
         setContentView(R.layout.activity_student_schedule_management);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle("My Schedule");
 
 //        tvScheduleMonAvailableCount = (TextView) findViewById(R.id.tvScheduleMonAvailableCount);

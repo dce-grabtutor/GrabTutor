@@ -26,6 +26,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.dce.grabtutor.Handler.AccountHandler;
 import com.dce.grabtutor.Model.Account;
 import com.dce.grabtutor.Model.Aptitude;
 import com.dce.grabtutor.Model.PendingBooking;
@@ -269,6 +270,8 @@ public class TutorMenuActivity extends AppCompatActivity
             startActivity(intent);
 
         } else if (id == R.id.nav_logout) {
+            AccountHandler accountHandler = new AccountHandler(this);
+            accountHandler.removeLoggedAccount();
             LoginActivity.loggedOut = true;
             this.finish();
         }
@@ -842,7 +845,7 @@ public class TutorMenuActivity extends AppCompatActivity
                             JSONObject jsonObject = new JSONObject(response);
 
                             if (jsonObject.getBoolean("success")) {
-                                Toast.makeText(TutorMenuActivity.this, "Location Update Sent to Server", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(TutorMenuActivity.this, "Location Updated", Toast.LENGTH_SHORT).show();
                             }
                         } catch (Exception ex) {
                             ex.printStackTrace();

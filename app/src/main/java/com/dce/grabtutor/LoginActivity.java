@@ -108,6 +108,11 @@ public class LoginActivity extends AppCompatActivity {
                                 account.setAcc_gender(jsonAccount.getString(Account.ACCOUNT_GENDER));
                                 account.setAcc_type(jsonAccount.getString(Account.ACCOUNT_TYPE));
 
+                                if (!jsonAccount.isNull(Account.ACCOUNT_LATITUDE)) {
+                                    account.setAcc_latitude(jsonAccount.getDouble(Account.ACCOUNT_LATITUDE));
+                                    account.setAcc_longitude(jsonAccount.getDouble(Account.ACCOUNT_LONGITUDE));
+                                }
+
                                 String acc_token = FirebaseInstanceId.getInstance().getToken();
                                 account.setAcc_token(acc_token);
 

@@ -42,8 +42,8 @@ public class MessageActivity extends AppCompatActivity {
 
     public static boolean isActive = false;
 
-    static RecyclerView rv;
-    static MessageAdapter adapter;
+    RecyclerView rv;
+    MessageAdapter adapter;
 
     EditText etMessageBody;
     String lastMessage;

@@ -81,4 +81,5 @@
     <string name="title_activity_student_schedule_management">StudentScheduleManagementActivity
     </string>
     <string name="title_activity_schedule_day_view_student">ScheduleDayViewStudentActivity</string>
+    <string name="title_activity_file_upload_files_list">FileUploadFilesListActivity</string>
 </resources>
