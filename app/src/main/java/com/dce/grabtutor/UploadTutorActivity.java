@@ -43,13 +43,13 @@ public class UploadTutorActivity extends AppCompatActivity implements View.OnCli
 
     private static final int PICK_FILE_REQUEST = 1;
     private static final String TAG = UploadTutorActivity.class.getSimpleName();
+    private String selectedFilePath;
+    private String SERVER_URL = URI.TUTOR_UPLOAD_REQUEST;
     ImageView ivAttachment;
     Button bUpload;
     TextView tvFileName;
     ProgressDialog dialog;
     Account account = new Account();
-    private String selectedFilePath;
-    private String SERVER_URL = URI.TUTOR_UPLOAD_REQUEST;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -211,7 +211,6 @@ public class UploadTutorActivity extends AppCompatActivity implements View.OnCli
                         @Override
                         public void run() {
                             tvFileName.setText("File Upload completed.");
-
                             StringRequest stringRequest = new StringRequest(Request.Method.POST, URI.TUTOR_UPLOAD,
                                     new Response.Listener<String>() {
                                         @Override
@@ -246,7 +245,7 @@ public class UploadTutorActivity extends AppCompatActivity implements View.OnCli
                                 protected Map<String, String> getParams() {
                                     Map<String, String> params = new HashMap<String, String>();
                                     params.put(Account.ACCOUNT_ID,String.valueOf( account.getAcc_user()));
-                                    params.put("file_name",selectedFilePath);
+                                    params.put("file_name", String.valueOf(selectedFilePath));
 
                                     return params;
                                 }
