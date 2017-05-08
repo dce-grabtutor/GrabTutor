@@ -6,7 +6,7 @@ package com.dce.grabtutor.Model;
 
 public class URI {
 
-    public static final String HOST = "http://192.168.254.104/grabtutor/";
+    public static final String HOST = "http://192.168.1.16/grabtutor/";
 
     public static final String TOKEN_UPDATE = HOST + "token_update.php";
     public static final String TOKEN_REMOVE = HOST + "token_remove";

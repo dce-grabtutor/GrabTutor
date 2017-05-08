@@ -210,7 +210,7 @@ public class UploadTutorActivity extends AppCompatActivity implements View.OnCli
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            tvFileName.setText("File Upload completed.");
+                            tvFileName.setText("File Upload completed." + fileName);
                             StringRequest stringRequest = new StringRequest(Request.Method.POST, URI.TUTOR_UPLOAD,
                                     new Response.Listener<String>() {
                                         @Override
@@ -244,8 +244,8 @@ public class UploadTutorActivity extends AppCompatActivity implements View.OnCli
                                 @Override
                                 protected Map<String, String> getParams() {
                                     Map<String, String> params = new HashMap<String, String>();
-                                    params.put(Account.ACCOUNT_ID,String.valueOf( account.getAcc_user()));
-                                    params.put("file_name", String.valueOf(selectedFilePath));
+                                    params.put(Account.ACCOUNT_ID,String.valueOf( account.getAcc_id()));
+                                    params.put("file_name", String.valueOf(fileName));
 
                                     return params;
                                 }
@@ -274,11 +274,24 @@ public class UploadTutorActivity extends AppCompatActivity implements View.OnCli
                 });
             } catch (MalformedURLException e) {
                 e.printStackTrace();
-                Toast.makeText(UploadTutorActivity.this, "URL error!", Toast.LENGTH_SHORT).show();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(UploadTutorActivity.this, "URL error!", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
 
             } catch (IOException e) {
                 e.printStackTrace();
-                Toast.makeText(UploadTutorActivity.this, "Cannot Read/Write File!", Toast.LENGTH_SHORT).show();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(UploadTutorActivity.this, "Cannot Read/Write File!", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+
             }
             dialog.dismiss();
             return serverResponseCode;
