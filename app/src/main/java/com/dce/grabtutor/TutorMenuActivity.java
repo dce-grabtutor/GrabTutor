@@ -188,6 +188,7 @@ public class TutorMenuActivity extends AppCompatActivity
         //Place current location marker
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
 
+        System.out.println("Location Changed: " + location.getLatitude() + ", " + location.getLongitude());
         Account.loggedAccount.setAcc_latitude(location.getLatitude());
         Account.loggedAccount.setAcc_longitude(location.getLongitude());
 
@@ -237,8 +238,6 @@ public class TutorMenuActivity extends AppCompatActivity
                 ActivityCompat.requestPermissions(this,
                         new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
                         MY_PERMISSIONS_REQUEST_LOCATION);
-
-
             } else {
                 ActivityCompat.requestPermissions(this,
                         new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},

@@ -391,6 +391,15 @@ public class ScheduleDayViewStudentActivity extends AppCompatActivity {
 
                 holder.tvScheduleSubject.setText(schedule.getSubject().getSubj_name());
             }
+
+            holder.cvScheduleDay.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    UserLocationsActivity.accountMapped = schedule.getStudent(); //Actually the Tutor in this case, as current user is Tutor
+                    Intent intent = new Intent(ScheduleDayViewStudentActivity.this, UserLocationsActivity.class);
+                    startActivity(intent);
+                }
+            });
         }
 
         @Override

@@ -15,7 +15,7 @@ import com.dce.grabtutor.Model.DatabaseHandler;
 public class AccountHandler {
     Context context;
 
-    public AccountHandler(Context context){
+    public AccountHandler(Context context) {
         this.context = context;
     }
 
@@ -35,6 +35,8 @@ public class AccountHandler {
         cv.put(Account.ACCOUNT_GENDER, account.getAcc_gender());
         cv.put(Account.ACCOUNT_TYPE, account.getAcc_type());
         cv.put(Account.ACCOUNT_TOKEN, account.getAcc_token());
+        cv.put(Account.ACCOUNT_LATITUDE, account.getAcc_latitude());
+        cv.put(Account.ACCOUNT_LONGITUDE, account.getAcc_longitude());
 
         db.insert(DatabaseHandler.TABLE_ACCOUNTS, null, cv);
         db.close();
@@ -58,6 +60,8 @@ public class AccountHandler {
             account.setAcc_gender(rs.getString(rs.getColumnIndex(Account.ACCOUNT_GENDER)));
             account.setAcc_type(rs.getString(rs.getColumnIndex(Account.ACCOUNT_TYPE)));
             account.setAcc_token(rs.getString(rs.getColumnIndex(Account.ACCOUNT_TOKEN)));
+            account.setAcc_latitude(rs.getDouble(rs.getColumnIndex(Account.ACCOUNT_LATITUDE)));
+            account.setAcc_longitude(rs.getDouble(rs.getColumnIndex(Account.ACCOUNT_LONGITUDE)));
         } while (rs.moveToNext());
 
         db.close();

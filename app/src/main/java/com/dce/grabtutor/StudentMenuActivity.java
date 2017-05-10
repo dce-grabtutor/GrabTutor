@@ -534,6 +534,8 @@ public class StudentMenuActivity extends AppCompatActivity
                                         student.setAcc_gender(sched.getString(Account.ACCOUNT_GENDER));
                                         student.setAcc_type(sched.getString(Account.ACCOUNT_TYPE));
                                         student.setAcc_token(sched.getString(Account.ACCOUNT_TOKEN));
+                                        student.setAcc_latitude(sched.getDouble(Account.ACCOUNT_LATITUDE));
+                                        student.setAcc_longitude(sched.getDouble(Account.ACCOUNT_LONGITUDE));
 
                                         schedule.setStudent(student);
                                     } else {

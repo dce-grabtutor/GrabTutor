@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.dce.grabtutor.StudentTutorSearchInformationActivity">
+    tools:context="com.dce.grabtutor.UserLocationsActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -26,29 +26,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context="com.dce.grabtutor.StudentTutorSearchInformationActivity"
-        tools:showIn="@layout/activity_student_tutor_search_information">
+        tools:context="com.dce.grabtutor.UserLocationsActivity"
+        tools:showIn="@layout/activity_user_locations">
 
-        <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
+        <fragment
             android:id="@+id/map"
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/btnBookNow"
-            tools:context="com.dce.grabtutor.StudentTutorSearchActivity" />
-
-
-        <Button
-            android:id="@+id/btnBookNow"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_alignParentStart="true"
-            android:background="@drawable/custom_border"
-            android:onClick="btnBookNowClick"
-            android:text="Book Now" />
-
+            android:layout_alignParentTop="true"
+            tools:context="com.dce.grabtutor.UserLocationsActivity" />
 
     </RelativeLayout>
 

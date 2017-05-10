@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 
 public class DatabaseHandler extends SQLiteOpenHelper {
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 2;
     public static final String DATABASE_NAME = "grabtutor.db";
 
     public static final String TABLE_ACCOUNTS = "accounts";
@@ -32,7 +32,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 Account.ACCOUNT_EMAIL + " TEXT, " +
                 Account.ACCOUNT_GENDER + " TEXT, " +
                 Account.ACCOUNT_TYPE + " TEXT, " +
-                Account.ACCOUNT_TOKEN + " TEXT " +
+                Account.ACCOUNT_TOKEN + " TEXT, " +
+                Account.ACCOUNT_LATITUDE + " REAL, " +
+                Account.ACCOUNT_LONGITUDE + " REAL " +
                 ")";
 
         String CREATE_TABLE_MESSAGES =  "CREATE TABLE " +
