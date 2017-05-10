@@ -43,5 +43,5 @@ public class URI {
     public static final String TUTOR_REQUEST_DECLINE = HOST + "tutor_request_decline.php";
 
     public static final String TUTOR_UPLOAD = HOST + "tutor_upload.php";
-    public static final String TUTOR_UPLOAD_REQUEST = HOST + "tutorUpload.php";
+    public static final String TUTOR_UPLOAD_REQUEST = HOST + "tutor_file_upload.php";
 }
