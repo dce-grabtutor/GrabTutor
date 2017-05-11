@@ -1,20 +1,15 @@
 package com.dce.grabtutor;
 
-/**
- * Created by jotan on 5/2/2017.
- */
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -39,51 +34,41 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-public class UploadTutorActivity extends AppCompatActivity implements View.OnClickListener {
+public class TutorRepositoryActivity extends AppCompatActivity {
 
     private static final int PICK_FILE_REQUEST = 1;
     private static final String TAG = UploadTutorActivity.class.getSimpleName();
-    ImageView ivAttachment;
-    Button bUpload;
-    TextView tvFileName;
     ProgressDialog dialog;
-    Account account = new Account();
     private String selectedFilePath;
     private String SERVER_URL = URI.TUTOR_UPLOAD_REQUEST;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_upload_tutor);
-        ivAttachment = (ImageView) findViewById(R.id.ivAttachment);
-        bUpload = (Button) findViewById(R.id.b_upload);
-        tvFileName = (TextView) findViewById(R.id.tv_file_name);
-        ivAttachment.setOnClickListener(this);
-        bUpload.setOnClickListener(this);
+        setContentView(R.layout.activity_tutor_repository);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setTitle("My Repository");
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showFileChooser();
+            }
+        });
     }
 
     @Override
-    public void onClick(View v) {
-        if (v == ivAttachment) {
+    public void onBackPressed() {
+        finish();
+    }
 
-            //on attachment icon click
-            showFileChooser();
-        }
-        if (v == bUpload) {
-            //on upload button Click
-            if (selectedFilePath != null) {
-                dialog = ProgressDialog.show(UploadTutorActivity.this, "", "Uploading File...", true);
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        //creating new thread to handle Http Operations
-                        uploadFile(selectedFilePath);
-                    }
-                }).start();
-            } else {
-                Toast.makeText(UploadTutorActivity.this, "Please choose a File First", Toast.LENGTH_SHORT).show();
-            }
-        }
+    @Override
+    public boolean onSupportNavigateUp() {
+        this.finish();
+        return true;
     }
 
     private void showFileChooser() {
@@ -108,14 +93,21 @@ public class UploadTutorActivity extends AppCompatActivity implements View.OnCli
 
                 Uri selectedFileUri = data.getData();
                 selectedFilePath = FilePath.getPath(this, selectedFileUri);
-                System.out.println(selectedFileUri.getEncodedPath());
-                System.out.println(selectedFileUri.getPath());
                 Log.i(TAG, "Selected File Path:" + selectedFilePath);
 
                 if (selectedFilePath != null && !selectedFilePath.equals("")) {
-                    tvFileName.setText(selectedFilePath);
+//                    tvFileName.setText(selectedFilePath);
+                    dialog = new ProgressDialog(this);
+                    dialog = ProgressDialog.show(TutorRepositoryActivity.this, "", "Uploading File", true);
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            //creating new thread to handle Http Operations
+                            uploadFile(selectedFilePath);
+                        }
+                    }).start();
                 } else {
-                    Toast.makeText(this, "Cannot upload file to server", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Cannot retrieve file path, please check if storage permission is enabled on your settings", Toast.LENGTH_SHORT).show();
                 }
             }
         }
@@ -123,7 +115,6 @@ public class UploadTutorActivity extends AppCompatActivity implements View.OnCli
 
     //android upload file to server
     public int uploadFile(final String selectedFilePath) {
-
         int serverResponseCode = 0;
 
         HttpURLConnection connection;
@@ -132,12 +123,10 @@ public class UploadTutorActivity extends AppCompatActivity implements View.OnCli
         String twoHyphens = "--";
         String boundary = "*****";
 
-
         int bytesRead, bytesAvailable, bufferSize;
         byte[] buffer;
         int maxBufferSize = 1 * 1024 * 1024;
         File selectedFile = new File(selectedFilePath);
-
 
         String[] parts = selectedFilePath.split("/");
         final String fileName = parts[parts.length - 1];
@@ -148,7 +137,7 @@ public class UploadTutorActivity extends AppCompatActivity implements View.OnCli
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    tvFileName.setText("Source File Doesn't Exist: " + selectedFilePath);
+//                    tvFileName.setText("Source File Doesn't Exist: " + selectedFilePath);
                 }
             });
             return 0;
@@ -208,7 +197,7 @@ public class UploadTutorActivity extends AppCompatActivity implements View.OnCli
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            tvFileName.setText("File Upload completed." + fileName);
+//                            tvFileName.setText("File Upload completed." + fileName);
                             StringRequest stringRequest = new StringRequest(Request.Method.POST, URI.TUTOR_UPLOAD,
                                     new Response.Listener<String>() {
                                         @Override
@@ -218,16 +207,16 @@ public class UploadTutorActivity extends AppCompatActivity implements View.OnCli
                                             try {
                                                 JSONObject jsonObject = new JSONObject(response);
                                                 if (jsonObject.getBoolean("success")) {
-                                                    Toast.makeText(UploadTutorActivity.this, "File Uploaded", Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(TutorRepositoryActivity.this, "File Uploaded", Toast.LENGTH_SHORT).show();
 
                                                 } else {
                                                     String error = jsonObject.getString("error");
-                                                    Toast.makeText(UploadTutorActivity.this, error, Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(TutorRepositoryActivity.this, error, Toast.LENGTH_SHORT).show();
                                                 }
 
                                             } catch (Exception ex) {
                                                 ex.printStackTrace();
-                                                Toast.makeText(UploadTutorActivity.this, "Update Failed", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(TutorRepositoryActivity.this, "Update Failed", Toast.LENGTH_SHORT).show();
                                             }
                                         }
                                     },
@@ -236,7 +225,7 @@ public class UploadTutorActivity extends AppCompatActivity implements View.OnCli
                                         @Override
                                         public void onErrorResponse(VolleyError error) {
                                             error.printStackTrace();
-                                            Toast.makeText(UploadTutorActivity.this, "Connection Failed", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(TutorRepositoryActivity.this, "Connection Failed", Toast.LENGTH_SHORT).show();
                                         }
                                     }) {
                                 @Override
@@ -249,12 +238,13 @@ public class UploadTutorActivity extends AppCompatActivity implements View.OnCli
                                 }
                             };
 
-                            RequestQueue requestQueue = Volley.newRequestQueue(UploadTutorActivity.this);
+                            RequestQueue requestQueue = Volley.newRequestQueue(TutorRepositoryActivity.this);
                             requestQueue.add(stringRequest);
                         }
                     });
                 }
 
+                connection.disconnect();
                 //closing the input and output streams
                 fileInputStream.close();
                 dataOutputStream.flush();
@@ -264,7 +254,7 @@ public class UploadTutorActivity extends AppCompatActivity implements View.OnCli
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(UploadTutorActivity.this, "File Not Found", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(TutorRepositoryActivity.this, "File Not Found", Toast.LENGTH_SHORT).show();
                     }
                 });
             } catch (MalformedURLException e) {
@@ -272,18 +262,21 @@ public class UploadTutorActivity extends AppCompatActivity implements View.OnCli
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(UploadTutorActivity.this, "URL error!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(TutorRepositoryActivity.this, "URL error!", Toast.LENGTH_SHORT).show();
 
                     }
                 });
+
             } catch (IOException e) {
                 e.printStackTrace();
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(UploadTutorActivity.this, "Cannot Read/Write File!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(TutorRepositoryActivity.this, "Cannot Read/Write File!", Toast.LENGTH_SHORT).show();
+
                     }
                 });
+
             }
             dialog.dismiss();
             return serverResponseCode;

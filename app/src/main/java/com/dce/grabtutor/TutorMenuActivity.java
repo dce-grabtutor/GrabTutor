@@ -264,10 +264,8 @@ public class TutorMenuActivity extends AppCompatActivity
         } else if (id == R.id.nav_messages) {
             loadConversations();
         } else if (id == R.id.nav_upload) {
-            Intent intent = new Intent(this, UploadTutorActivity.class);
-
+            Intent intent = new Intent(this, TutorRepositoryActivity.class);
             startActivity(intent);
-
         } else if (id == R.id.nav_logout) {
             AccountHandler accountHandler = new AccountHandler(this);
             accountHandler.removeLoggedAccount();
