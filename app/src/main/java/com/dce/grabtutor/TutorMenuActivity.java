@@ -30,6 +30,7 @@ import com.dce.grabtutor.Handler.AccountHandler;
 import com.dce.grabtutor.Model.Account;
 import com.dce.grabtutor.Model.Aptitude;
 import com.dce.grabtutor.Model.PendingBooking;
+import com.dce.grabtutor.Model.RepositoryFile;
 import com.dce.grabtutor.Model.Schedule;
 import com.dce.grabtutor.Model.Subject;
 import com.dce.grabtutor.Model.URI;
@@ -264,8 +265,9 @@ public class TutorMenuActivity extends AppCompatActivity
         } else if (id == R.id.nav_messages) {
             loadConversations();
         } else if (id == R.id.nav_upload) {
-            Intent intent = new Intent(this, TutorRepositoryActivity.class);
-            startActivity(intent);
+//            Intent intent = new Intent(this, TutorRepositoryActivity.class);
+//            startActivity(intent);
+            loadRepository();
         } else if (id == R.id.nav_logout) {
             AccountHandler accountHandler = new AccountHandler(this);
             accountHandler.removeLoggedAccount();
@@ -749,6 +751,60 @@ public class TutorMenuActivity extends AppCompatActivity
                             }
 
                             Intent intent = new Intent(TutorMenuActivity.this, TutorTutorialRequestListActivity.class);
+                            startActivity(intent);
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                },
+
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                        Toast.makeText(TutorMenuActivity.this, "Connection Failed", Toast.LENGTH_SHORT).show();
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put(Account.ACCOUNT_ID, String.valueOf(Account.loggedAccount.getAcc_id()));
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
+    public void loadRepository() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URI.REPOSITORY_FILES_FETCH,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        System.out.println(response);
+
+                        try {
+                            RepositoryFile.repositoryFiles = new ArrayList<>();
+                            JSONObject jsonObject = new JSONObject(response);
+
+                            if (jsonObject.getBoolean("success")) {
+                                JSONArray jsonArray = jsonObject.getJSONArray("files");
+
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject repositoryFileObject = jsonArray.getJSONObject(i);
+
+                                    RepositoryFile repositoryFile = new RepositoryFile();
+                                    repositoryFile.setAcc_id(repositoryFileObject.getInt(RepositoryFile.REPOSITORY_FILE_ACC_ID));
+                                    repositoryFile.setFile_name(repositoryFileObject.getString(RepositoryFile.REPOSITORY_FILE_FILE_NAME));
+                                    repositoryFile.setFile_download_url(URI.REPOSITORY_FILES_DOWNLOAD + "?acc_id=" + repositoryFile.getAcc_id() + "&file_name=" + repositoryFile.getFile_name());
+
+                                    RepositoryFile.repositoryFiles.add(repositoryFile);
+                                }
+                            }
+
+                            Intent intent = new Intent(TutorMenuActivity.this, TutorRepositoryActivity.class);
                             startActivity(intent);
                         } catch (Exception ex) {
                             ex.printStackTrace();

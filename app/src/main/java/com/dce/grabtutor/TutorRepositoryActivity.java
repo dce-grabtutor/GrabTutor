@@ -2,17 +2,34 @@ package com.dce.grabtutor;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HurlStack;
+import com.android.volley.toolbox.Volley;
+import com.dce.grabtutor.Handler.InputStreamVolleyRequest;
 import com.dce.grabtutor.Model.Account;
+import com.dce.grabtutor.Model.RepositoryFile;
 import com.dce.grabtutor.Model.URI;
 
 import org.json.JSONObject;
@@ -22,17 +39,21 @@ import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+
 public class TutorRepositoryActivity extends AppCompatActivity {
 
     private static final int PICK_FILE_REQUEST = 1;
     private static final String TAG = UploadTutorActivity.class.getSimpleName();
     ProgressDialog dialog;
+    RecyclerView rv;
+    RepositoryFilesAdapter adapter;
     private String selectedFilePath;
     private String SERVER_URL = URI.TUTOR_UPLOAD_REQUEST + "?acc_id=";
 
@@ -54,6 +75,10 @@ public class TutorRepositoryActivity extends AppCompatActivity {
                 showFileChooser();
             }
         });
+
+        rv = (RecyclerView) findViewById(R.id.rvRepositoryFilesList);
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        rv.setLayoutManager(llm);
     }
 
     @Override
@@ -65,6 +90,13 @@ public class TutorRepositoryActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         this.finish();
         return true;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        adapter = new RepositoryFilesAdapter(this);
+        rv.setAdapter(adapter);
     }
 
     private void showFileChooser() {
@@ -209,6 +241,13 @@ public class TutorRepositoryActivity extends AppCompatActivity {
 
                                 if (jsonObject.getBoolean("success")) {
                                     Toast.makeText(TutorRepositoryActivity.this, jsonObject.getString("file_upload"), Toast.LENGTH_SHORT).show();
+                                    RepositoryFile repositoryFile = new RepositoryFile();
+                                    repositoryFile.setAcc_id(Account.loggedAccount.getAcc_id());
+                                    repositoryFile.setFile_name(fileName);
+                                    repositoryFile.setFile_download_url(URI.REPOSITORY_FILES_DOWNLOAD + "?acc_id=" + Account.loggedAccount.getAcc_id() + "&file_name=" + fileName);
+
+                                    RepositoryFile.repositoryFiles.add(repositoryFile);
+                                    adapter.notifyDataSetChanged();
                                 } else {
                                     Toast.makeText(TutorRepositoryActivity.this, "Upload Failed", Toast.LENGTH_SHORT).show();
                                 }
@@ -252,6 +291,88 @@ public class TutorRepositoryActivity extends AppCompatActivity {
             }
             dialog.dismiss();
             return serverResponseCode;
+        }
+    }
+
+    public class RepositoryFilesAdapter extends RecyclerView.Adapter<RepositoryFilesAdapter.ViewHolder> {
+
+        Context context;
+
+        public RepositoryFilesAdapter(Context context) {
+            this.context = context;
+        }
+
+        @Override
+        public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+            View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recycler_repository_files_list, viewGroup, false);
+            ViewHolder vh = new ViewHolder(v);
+
+            return vh;
+        }
+
+        @Override
+        public void onBindViewHolder(ViewHolder holder, int position) {
+            final RepositoryFile repositoryFile = RepositoryFile.repositoryFiles.get(position);
+
+            holder.tvFileName.setText(repositoryFile.getFile_name());
+            holder.btnDownload.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    InputStreamVolleyRequest request = new InputStreamVolleyRequest(Request.Method.GET, repositoryFile.getFile_download_url(),
+                            new Response.Listener<byte[]>() {
+                                @Override
+                                public void onResponse(byte[] response) {
+                                    try {
+                                        if (response != null) {
+
+                                            File path = Environment.getExternalStorageDirectory();
+                                            File file = new File(path, repositoryFile.getFile_name());
+                                            FileOutputStream outputStream = new FileOutputStream(file);
+//                                            outputStream = openFileOutput(name, Context.MODE_PRIVATE);
+                                            outputStream.write(response);
+                                            outputStream.close();
+
+                                            Toast.makeText(TutorRepositoryActivity.this, "Download Complete. File is located in Internal Storage", Toast.LENGTH_LONG).show();
+                                        }
+                                    } catch (Exception e) {
+                                        Log.d("KEY_ERROR", "UNABLE TO DOWNLOAD FILE");
+                                        e.printStackTrace();
+                                        Toast.makeText(context, "Download Failed. Please Check your Internet Connection.", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            }, new Response.ErrorListener() {
+
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            error.printStackTrace();
+                        }
+                    }, null);
+
+                    RequestQueue requestQueue = Volley.newRequestQueue(TutorRepositoryActivity.this, new HurlStack());
+                    requestQueue.add(request);
+                }
+            });
+        }
+
+        @Override
+        public int getItemCount() {
+            return RepositoryFile.repositoryFiles.size();
+        }
+
+        public class ViewHolder extends RecyclerView.ViewHolder {
+            CardView cv;
+
+            TextView tvFileName;
+            ImageButton btnDownload;
+
+            public ViewHolder(View itemView) {
+                super(itemView);
+
+                cv = (CardView) itemView.findViewById(R.id.cv);
+
+                tvFileName = (TextView) itemView.findViewById(R.id.tvFileName);
+                btnDownload = (ImageButton) itemView.findViewById(R.id.btnDownload);
+            }
         }
     }
 
