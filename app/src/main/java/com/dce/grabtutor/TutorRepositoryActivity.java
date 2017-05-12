@@ -12,27 +12,21 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.dce.grabtutor.Model.Account;
 import com.dce.grabtutor.Model.URI;
 
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
 
 public class TutorRepositoryActivity extends AppCompatActivity {
 
@@ -40,7 +34,7 @@ public class TutorRepositoryActivity extends AppCompatActivity {
     private static final String TAG = UploadTutorActivity.class.getSimpleName();
     ProgressDialog dialog;
     private String selectedFilePath;
-    private String SERVER_URL = URI.TUTOR_UPLOAD_REQUEST;
+    private String SERVER_URL = URI.TUTOR_UPLOAD_REQUEST + "?acc_id=";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +44,8 @@ public class TutorRepositoryActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle("My Repository");
+
+        SERVER_URL += Account.loggedAccount.getAcc_id();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -125,7 +121,7 @@ public class TutorRepositoryActivity extends AppCompatActivity {
 
         int bytesRead, bytesAvailable, bufferSize;
         byte[] buffer;
-        int maxBufferSize = 1 * 1024 * 1024;
+        int maxBufferSize = 5 * 1024 * 1024;
         File selectedFile = new File(selectedFilePath);
 
         String[] parts = selectedFilePath.split("/");
@@ -133,7 +129,6 @@ public class TutorRepositoryActivity extends AppCompatActivity {
 
         if (!selectedFile.isFile()) {
             dialog.dismiss();
-
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -153,16 +148,15 @@ public class TutorRepositoryActivity extends AppCompatActivity {
                 connection.setRequestProperty("Connection", "Keep-Alive");
                 connection.setRequestProperty("ENCTYPE", "multipart/form-data");
                 connection.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
-                connection.setRequestProperty("uploaded_file", selectedFilePath);
+                connection.setRequestProperty("fileToUpload", selectedFilePath);
 
                 //creating new dataoutputstream
                 dataOutputStream = new DataOutputStream(connection.getOutputStream());
 
                 //writing bytes to data outputstream
                 dataOutputStream.writeBytes(twoHyphens + boundary + lineEnd);
-                dataOutputStream.writeBytes("Content-Disposition: form-data; name=\"uploaded_file\";filename=\""
+                dataOutputStream.writeBytes("Content-Disposition: form-data; acc_id=\"" + Account.loggedAccount.getAcc_id() + "\";name=\"fileToUpload\";filename=\""
                         + selectedFilePath + "\"" + lineEnd);
-
                 dataOutputStream.writeBytes(lineEnd);
 
                 //returns no. of bytes present in fileInputStream
@@ -194,58 +188,38 @@ public class TutorRepositoryActivity extends AppCompatActivity {
 
                 //response code of 200 indicates the server status OK
                 if (serverResponseCode == 200) {
+                    BufferedReader in = new BufferedReader(
+                            new InputStreamReader(connection.getInputStream()));
+
+                    String inputLine;
+                    StringBuffer response = new StringBuffer();
+                    while ((inputLine = in.readLine()) != null) {
+                        response.append(inputLine);
+                    }
+                    in.close();
+
+                    final String result = response.toString();
+                    System.out.println(result);
+
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-//                            tvFileName.setText("File Upload completed." + fileName);
-                            StringRequest stringRequest = new StringRequest(Request.Method.POST, URI.TUTOR_UPLOAD,
-                                    new Response.Listener<String>() {
-                                        @Override
-                                        public void onResponse(String response) {
-                                            System.out.println(response);
+                            try {
+                                JSONObject jsonObject = new JSONObject(result);
 
-                                            try {
-                                                JSONObject jsonObject = new JSONObject(response);
-                                                if (jsonObject.getBoolean("success")) {
-                                                    Toast.makeText(TutorRepositoryActivity.this, "File Uploaded", Toast.LENGTH_SHORT).show();
-
-                                                } else {
-                                                    String error = jsonObject.getString("error");
-                                                    Toast.makeText(TutorRepositoryActivity.this, error, Toast.LENGTH_SHORT).show();
-                                                }
-
-                                            } catch (Exception ex) {
-                                                ex.printStackTrace();
-                                                Toast.makeText(TutorRepositoryActivity.this, "Update Failed", Toast.LENGTH_SHORT).show();
-                                            }
-                                        }
-                                    },
-
-                                    new Response.ErrorListener() {
-                                        @Override
-                                        public void onErrorResponse(VolleyError error) {
-                                            error.printStackTrace();
-                                            Toast.makeText(TutorRepositoryActivity.this, "Connection Failed", Toast.LENGTH_SHORT).show();
-                                        }
-                                    }) {
-                                @Override
-                                protected Map<String, String> getParams() {
-                                    Map<String, String> params = new HashMap<String, String>();
-                                    params.put(Account.ACCOUNT_ID, String.valueOf(Account.loggedAccount.getAcc_id()));
-                                    params.put("file_name", String.valueOf(fileName));
-
-                                    return params;
+                                if (jsonObject.getBoolean("success")) {
+                                    Toast.makeText(TutorRepositoryActivity.this, jsonObject.getString("file_upload"), Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(TutorRepositoryActivity.this, "Upload Failed", Toast.LENGTH_SHORT).show();
                                 }
-                            };
-
-                            RequestQueue requestQueue = Volley.newRequestQueue(TutorRepositoryActivity.this);
-                            requestQueue.add(stringRequest);
+                            } catch (Exception ex) {
+                                ex.printStackTrace();
+                            }
                         }
                     });
                 }
 
                 connection.disconnect();
-                //closing the input and output streams
                 fileInputStream.close();
                 dataOutputStream.flush();
                 dataOutputStream.close();
@@ -266,7 +240,6 @@ public class TutorRepositoryActivity extends AppCompatActivity {
 
                     }
                 });
-
             } catch (IOException e) {
                 e.printStackTrace();
                 runOnUiThread(new Runnable() {
@@ -276,7 +249,6 @@ public class TutorRepositoryActivity extends AppCompatActivity {
 
                     }
                 });
-
             }
             dialog.dismiss();
             return serverResponseCode;
